@@ -1,0 +1,277 @@
+body{
+    margin: 0;/*Убирает стандартные оцтупы*/
+    font-family: 'Open Sans', sans-serif;/*Задаем шрифт для body*/
+    font-size: 14px;/*Задаем размер шрифта*/
+    color: #606060; /*Задаем свет шрифта*/
+    font-weight: 400;  /* жжирность шрифта*/
+    background-color: #fff; /*Цвет фона для body*/
+}
+*, 
+*:before,
+*:after {
+    margin: 0; /*Убираем все оцтупы*/
+    box-sizing: border-box; /*Фиксируем размер блоков,  оцтупы не будут влиять на размер блока*/
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0; /* Убираем все отступы у всех заголовков*/
+}
+p {
+   margin: 0 0 10px 0; /*также убераем отступ текста <p> сверху, слува и справа, снизу оставляем 10*/
+}
+/* ----------------
+    Container
+=================*/ 
+.container {
+    width: 100%;/*Минимальная ширина контейнера на весь экран*/
+    max-width: 1200px;/* Максимальна ширина контейнера*/
+    margin: 0 auto; /*Выравниваем его по центру*/
+}
+
+/* ----------------
+    Header
+=================*/    
+.header{
+    padding: 30px 0; /*Оцтупы в сверху и снизу 30px left and right 0px*/  
+    height: 110px; /*Высота шапки (Header)*/
+    background-color: white ; /*Цвет фона шапки (Header)*/
+    opacity: .9; /*Делает прозрачность фона (90% видимости) */
+    position: absolute; /*Закрепляет по верх элементов (вторым слоем)*/
+    width: 100%; /*ширина на весь экран*/
+    top: 0; /*позиция высота 0*/
+    left: 0; /* позиция слева 0*/
+    z-index: 1000; /* по верх всех элементов*/
+}
+
+/* ----------------
+Nav
+=================*/  
+.nav {
+    align-items: center; /*Размещает блоки внутри nav по центру*/
+    display: flex; /*все блоки в нутри header_inner буду работать по flex*/
+    justify-content: space-between; /*Значение flax  распологает содержимое header_inner на равные растояния друг от друга*/
+    font-size:  14px; /*Размер шрифта для навигации*/
+    font-weight: 400;/*стиля шрифта 400 = Regular для Open Sans*/
+    text-transform: uppercase; /*Делает буквы большие (ВСЕ БУКВЫ ЗАГЛАВНЫЕ)*/   
+    
+}
+.nav_link{
+    margin-left: 10px; /*Оцтуп у каждой ссылки с лево*/
+    margin-right: 10px; /*Оцтуп у каждой ссылки с права*/
+    color: #7f8c8d; /*Цвет шрифта для ссылок*/
+    text-decoration: none; /*Убирает подчеркивание под ссылками*/
+    transition: .1s linear; /*Плавный переход 0.1сек. к стилю ,     nav_link:hover */
+}
+
+.nav > p{
+    font-family: 'Lato', sans-serif; /*Устанавливаем стиль шрифта для класса <p> внутри nav*/
+    font-size:  40px; /*Размер шрифта <p> внутри nav*/
+    font-weight: 900; /*стиля шрифта <p> внутри nav 900 = black для Lato */
+    text-transform: uppercase; /*Делает буквы большие (ВСЕ БУКВЫ ЗАГЛАВНЫЕ) для <p> внутри nav*/
+    color: black;/*Цвет шрифта <p> внутри nav*/
+}
+.nav_link:hover {
+    color: #2980b9; /*Цвет шрифта для ссылок при навидение*/
+}
+
+.nav_link:first-child {
+    margin-left: 10px; /*Делает оцтуп у первой ссылки nav_link*/
+}
+.nav_link:last-child {
+    margin-right: 10px; /*Делает оцтуп у последней ссылки nav_link*/
+}
+
+/* ----------------
+Intro
+=================*/ 
+
+.intro > .container{
+    display: flex; /*все блоки в нутри буду работать по flex*/
+    flex-direction: column; /*каждый элемент будет начинаться с новой строки*/
+    justify-content: space-between; /*Элементы распалагают по центру*/
+    min-height: max-content;
+    height: 260px;
+}
+.intro {
+    display: flex; /*все блоки в нутри буду работать по flex*/
+    flex-direction: column; /*каждый элемент будет начинаться с новой строки*/
+    justify-content: center; /*Элементы распалагают по центру*/
+    height: 700px; /*Высота блока intro*/
+    padding: 110px;/* Отступ который равен высоты шапки*/
+    background:#2f3030 url(image__site/image__start.jpg) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
+}
+.container_intro{
+    margin: 0 auto; /*Выравниваем его по центру*/
+    min-width: 310px; /*Задаем минимальную ширину*/
+    max-width: max-content; /*Максимальна ширина на весь контент*/
+    background-color: #2f3030;/*цвет фона*/
+    border:1px solid #fff; /*толшина рамки, размер рамки , цвет рамки*/
+    opacity: .80;/* видемость 80%*/
+    border-radius: 25px;/* закругления для фона*/
+    padding: 5px; /*Оцтупы*/
+}
+
+.intro_inner {
+    display: flex; /*все блоки в нутри буду работать по flex*/
+    flex-direction: column; /*каждый элемент будет начинаться с новой строки*/
+    justify-content: space-between; /*Элементы распалагают по центру*/
+    width: 100%;/* ширина на весь экран но не больше 880*/
+    max-width: 880px;/* максимальная ширина*/
+    margin: 0 auto;/* размещение по центру*/
+    min-height: 130px; /*Задаем минимальную высоту*/
+    max-height: max-content; /*Максимальная высота по контенту*/
+}
+
+.intro_title {
+    width: 100%;/* ширина на весь экран но не больше 880*/
+    max-width: 880px;/* максимальная ширина*/
+    font-family: 'Lato', sans-serif; /*Устанавливаем стиль шрифта*/
+    font-size:  50px; /*Размер шрифта*/
+    font-weight: 900; /*стиля шрифта  900 = black для Lato */
+    color: white;/*Цвет шрифта*/
+    text-transform: uppercase; /*Делает буквы большие (ВСЕ БУКВЫ ЗАГЛАВНЫЕ)*/
+    text-align: center; /*Размещение текста по центру*/
+    line-height: 1; /*Отсутп между буквами в % соотнашение от font-size:  50px; */
+
+}
+.intro_subtitle {
+    font-family: 'Lato', sans-serif; /*Устанавливаем стиль шрифта*/
+    font-size:  16px; /*Размер шрифта*/
+    font-weight: 300; /*стиля шрифта  300 = Light для Lato */
+    color: white;/*Цвет шрифта*/
+    text-align: center; /*Размещение текста по центру*/
+    line-height: 1; /*Отсутп между буквами в % соотнашение от font-size:  50px; */
+    padding: 0 20px; /*Оцтупы*/
+}
+
+.intro_UP, .intro_down {
+    display: flex; /*устанавливаем значение flex для элементов внутри*/
+    justify-content: center; /* размещает элементы по центру*/
+    align-items: center; /*Размещает блоки внутри nav по центру*/
+}
+.intro_UP > p, .intro_down > p{
+    margin: 0; /*Убираем отступ снизу - который мы задавали изначально в 10px*/
+}
+.intro_dot{
+    color: #979898; /*Цвет кружков*/
+}
+.intro_dow_line{
+    border-top:1px solid #979898; /*Размер, длина (сплошная), цвет верхней полоски*/
+    border-bottom: 1px solid #979898; /*Размер, длина (сплошная), цвет нижней полоски*/
+    padding-top: 2px; /*Оцтуп сверху*/
+    width: 100px; /*Ширина блока*/
+    opacity: .80; /*прозрачность*/
+}
+
+/* ----------------
+Intro
+=================*/ 
+
+.container_button{
+    margin: 0 auto; /*Выравниваем его по центру*/
+    max-width: 300px; /*Задаем минимальную ширину*/
+    min-width: max-content;
+    max-height: 60px; /*Задаем минимальную высоту*/
+    min-height: max-content;
+    display: flex; /*устанавливаем значение flex для элементов внутри*/
+    justify-content: center; /* размещает элементы по центру*/
+    align-items: center; /*Размещает блоки внутри nav по центру*/
+    
+}
+
+.button {
+    color: #fff; /*цвет текста и рамки*/
+    border: 1px solid; /*размер рамки + сплошная на весь блок*/
+    padding: 19px 39px; /* оцтупы вер-низ , лево-право*/
+    border-radius: 1px; /* закругление рамки*/
+    text-transform: uppercase; /* большой шрифт*/
+    text-decoration: none; /* убрать полоску под ссылкой*/
+    font-family: 'Lato', sans-serif; /* стиль шрифта*/
+    font-size:  14px; /* размер шрифта*/
+    font-weight: 300;  /* жжирность шрифта*/
+}
+
+.button:hover {
+    color: #2980b9;
+}
+
+.button--start {
+    background-color: #2f3030;/*цвет фона*/
+    opacity: .80;/* видемость 80%*/
+    border-radius: 1px;/* закругления для фона*/
+}
+
+
+
+/* ----------------
+intro_FEATURES
+=================*/ 
+.intro_features_background{
+    display: flex; /*все блоки в нутри буду работать по flex*/
+    flex-direction: column; /*каждый элемент будет начинаться с новой строки*/
+    justify-content: center; /*Элементы распалагают по центру*/
+    height: 435px; /*Высота блока*/
+    background:#ffffff url(image__site/Background_1.png) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
+}
+.container_features{
+    display: flex; /*Устанавлием значение Флэкс*/
+    justify-content: space-between; /*Элементы по центру*/
+    flex-direction: column; /* каждый элемент с новой строки*/
+    text-align: center; /*отображения текста по центру*/
+}
+.intro_features_text {
+    margin: 0 auto; /*убираем оцтупы и выравниваем на центр*/
+    max-height: 180px; /*максимальна высота*/
+    height: 100%; /* высота на весь экран не больше максимальной*/
+    max-width: 750px; /*максимальная ширина*/
+    width: 100%; /* ширина на весь экран не больше максимальной*/
+    
+}
+.intro_features_title{
+    color: black; /*Цвет шрифта*/
+    font-family: 'Lato', sans-serif; /* стиль шрифта*/
+    font-size:  44px; /* размер шрифта*/
+    font-weight: 300;  /* жжирность шрифта*/
+    margin-bottom: 35px; /*оцтуп снизу*/
+}
+.intro_features_line{
+    width: 150px; /* ширина линиии*/
+    background-color: #a5a8a9; /*цвет линии*/
+    margin: 0 auto; /*расположение по центру*/
+    border-radius: 1px; /*закругление*/
+    border: 0; /*убираем рамку*/
+    height: 1px; /*толщина линии*/
+    opacity: .80; /*прозрачность*/
+}
+.intro_features_subtitle{
+    font-family: 'Open Sans', sans-serif;/*Задаем шрифт для body*/
+    font-size: 14px;/*Задаем размер шрифта*/
+    color: #606060; /*Задаем свет шрифта*/
+    font-weight: 400;  /* жжирность шрифта*/
+    margin-top: 35px; /*оцтуп снизу*/
+}
+
+/* Делаем картинки как ссылки! */
+.features_item {
+    display: flex; /* Установление значения блоков внутри*/
+    justify-content: center; /*Расположение блоков по центру*/
+}
+
+.features {
+    max-width: 140px; /* максимаьня */
+    width: 100%;
+    max-height: 85px;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;/*Задаем шрифт*/
+    font-size: 14px;/*Задаем размер шрифта*/
+    color: black; /*Задаем свет шрифта*/
+    font-weight: 400;  /* жжирность шрифта*/
+    text-decoration: none; /*Убираем линию под сылко*/
+}
+.features > p {
+    text-align: bottom;
+    margin: 0 auto;
+} 
+.feature_img {
+    
+    padding-bottom: 20px; /*Оцтуп снизу картинки*/
+}
