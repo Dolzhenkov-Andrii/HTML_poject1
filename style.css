@@ -18,6 +18,11 @@ h1, h2, h3, h4, h5, h6 {
 p {
    margin: 0 0 10px 0; /*также убераем отступ текста <p> сверху, слува и справа, снизу оставляем 10*/
 }
+
+ul, li {
+    padding: 0;
+    list-style: none;
+}
 /* ----------------
     Container
 =================*/ 
@@ -214,9 +219,11 @@ intro_FEATURES
 }
 .container_features{
     display: flex; /*Устанавлием значение Флэкс*/
-    justify-content: space-between; /*Элементы по центру*/
+    justify-content: space-between; /*Значение flax  распологает содержимое header_inner на равные растояния друг от друга*/
     flex-direction: column; /* каждый элемент с новой строки*/
     text-align: center; /*отображения текста по центру*/
+    height: 465px;
+    padding: 65px 0;
 }
 .intro_features_text {
     margin: 0 auto; /*убираем оцтупы и выравниваем на центр*/
@@ -251,27 +258,84 @@ intro_FEATURES
 }
 
 /* Делаем картинки как ссылки! */
-.features_item {
-    display: flex; /* Установление значения блоков внутри*/
-    justify-content: center; /*Расположение блоков по центру*/
+
+.features_item  {
+    display: inline-flex;
+    justify-content:center;
+}
+.features_item > li {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 136px;
+    height: 100%;
+    max-height: 75px;
+}
+.fi_link {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    color: #000000; 
+    font-weight: 400; 
+    text-decoration: none;
+    transition: .2s linear;
+}
+.fi_link > i {
+    height: 100%;
+    max-height: 33px;
+    width: max-content;
+    margin: auto;
+    margin-bottom: 25px;
+    transition: .2s linear;
+}
+.fi_img_1{
+    content: url(features/feature_1.png);
+}
+.fi_img_2{
+    content: url(features/feature_2.png);
+}
+.fi_img_3{
+    content: url(features/feature_3.png);
+}
+.fi_img_4{
+    content: url(features/feature_4.png);
+}
+.fi_img_5{
+    content: url(features/feature_5.png);
 }
 
-.features {
-    max-width: 140px; /* максимаьня */
-    width: 100%;
-    max-height: 85px;
-    height: 100%;
-    font-family: 'Open Sans', sans-serif;/*Задаем шрифт*/
-    font-size: 14px;/*Задаем размер шрифта*/
-    color: black; /*Задаем свет шрифта*/
-    font-weight: 400;  /* жжирность шрифта*/
-    text-decoration: none; /*Убираем линию под сылко*/
+
+.fi_link:hover {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    color: #2980b9; 
+    font-weight: 400; 
+    text-decoration: none;
 }
-.features > p {
-    text-align: bottom;
-    margin: 0 auto;
-} 
-.feature_img {
-    
-    padding-bottom: 20px; /*Оцтуп снизу картинки*/
+.fi_link:hover > i {
+    height: 100%;
+    max-height: 50px;
+    width: max-content;
+    margin: auto;
+    margin-bottom: 25px;
+}
+.fi_link:hover >.fi_img_1{
+    content: url(features/feature_1u.png);
+}
+.fi_link:hover >.fi_img_2{
+    content: url(features/feature_2u.png);
+}
+.fi_link:hover >.fi_img_3{
+    content: url(features/feature_3u.png);
+}
+.fi_link:hover >.fi_img_4{
+    content: url(features/feature_4u.png);
+}
+.fi_link:hover >.fi_img_5{
+    content: url(features/feature_5u.png);
 }
