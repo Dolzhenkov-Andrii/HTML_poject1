@@ -6,6 +6,15 @@ body{
     font-weight: 400;  /* жжирность шрифта*/
     background-color: #fff; /*Цвет фона для body*/
 }
+body.the_night{
+    background-color: #000000;
+    color: #a5a8a9;
+}
+button {
+    font-style: none;
+    background-color: #00000000;
+    border: 0;
+}
 *, 
 *:before,
 *:after {
@@ -46,7 +55,9 @@ ul, li {
     left: 0; /* позиция слева 0*/
     z-index: 1000; /* по верх всех элементов*/
 }
-
+body.the_night > .header{
+    background-color: #000000;
+}
 /* ----------------
 Nav
 =================*/  
@@ -56,8 +67,12 @@ Nav
     justify-content: space-between; /*Значение flax  распологает содержимое header_inner на равные растояния друг от друга*/
     font-size:  14px; /*Размер шрифта для навигации*/
     font-weight: 400;/*стиля шрифта 400 = Regular для Open Sans*/
-    text-transform: uppercase; /*Делает буквы большие (ВСЕ БУКВЫ ЗАГЛАВНЫЕ)*/   
-    
+    text-transform: uppercase; /*Делает буквы большие (ВСЕ БУКВЫ ЗАГЛАВНЫЕ)*/ 
+    width: 100%;  
+}
+.header > .container {
+    display: flex;
+    flex-direction: row;
 }
 .nav_link{
     margin-left: 10px; /*Оцтуп у каждой ссылки с лево*/
@@ -67,12 +82,17 @@ Nav
     transition: .1s linear; /*Плавный переход 0.1сек. к стилю ,     nav_link:hover */
 }
 
-.nav > p{
+.day_night{
+    margin: 0 70px;
     font-family: 'Lato', sans-serif; /*Устанавливаем стиль шрифта для класса <p> внутри nav*/
     font-size:  40px; /*Размер шрифта <p> внутри nav*/
     font-weight: 900; /*стиля шрифта <p> внутри nav 900 = black для Lato */
     text-transform: uppercase; /*Делает буквы большие (ВСЕ БУКВЫ ЗАГЛАВНЫЕ) для <p> внутри nav*/
     color: black;/*Цвет шрифта <p> внутри nav*/
+    text-decoration: none; /*Убирает подчеркивание под ссылками*/
+}
+body.the_night > .header > .container > .day_night {
+    color: #ffffff;
 }
 .nav_link:hover {
     color: #2980b9; /*Цвет шрифта для ссылок при навидение*/
@@ -104,6 +124,9 @@ Intro
     padding: 110px;/* Отступ который равен высоты шапки*/
     background:#2f3030 url(image__site/image__start.jpg) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
 }
+body.the_night > .intro{
+    background:#000000 url(image__site/image__start_night.jpg) center /cover; 
+}
 .container_intro{
     margin: 0 auto; /*Выравниваем его по центру*/
     min-width: 310px; /*Задаем минимальную ширину*/
@@ -114,7 +137,11 @@ Intro
     border-radius: 25px;/* закругления для фона*/
     padding: 5px; /*Оцтупы*/
 }
-
+body.the_night > .intro > .container > .container_intro{
+    opacity: 1;
+    background:none;/*цвет фона*/
+    border:0; /*толшина рамки, размер рамки , цвет рамки*/
+}
 .intro_inner {
     display: flex; /*все блоки в нутри буду работать по flex*/
     flex-direction: column; /*каждый элемент будет начинаться с новой строки*/
@@ -205,7 +232,10 @@ Intro
     border-radius: 1px;/* закругления для фона*/
 }
 
-
+body.the_night > .intro > .container > .container_button > .button--start{
+    opacity: 1;
+    background:none;/*цвет фона*/
+}
 
 /* ----------------
 intro_FEATURES
@@ -216,6 +246,9 @@ intro_FEATURES
     justify-content: center; /*Элементы распалагают по центру*/
     height: 435px; /*Высота блока*/
     background:#ffffff url(image__site/Background_1.png) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
+}
+body.the_night > .intro_features_background {
+    background:#000000 url(image__site/Background_1_night.png) center /cover;
 }
 .container_features{
     display: flex; /*Устанавлием значение Флэкс*/
@@ -233,6 +266,7 @@ intro_FEATURES
     width: 100%; /* ширина на весь экран не больше максимальной*/
     
 }
+
 .intro_features_title{
     color: black; /*Цвет шрифта*/
     font-family: 'Lato', sans-serif; /* стиль шрифта*/
@@ -240,6 +274,11 @@ intro_FEATURES
     font-weight: 300;  /* жжирность шрифта*/
     margin-bottom: 35px; /*оцтуп снизу*/
 }
+body.the_night > .intro_features_background > .container >
+.container_features >.intro_features_text > .intro_features_title {
+    color: #ffffff;
+}
+
 .intro_features_line{
     width: 150px; /* ширина линиии*/
     background-color: #a5a8a9; /*цвет линии*/
@@ -269,6 +308,7 @@ intro_FEATURES
     height: 100%;
     max-height: 75px;
 }
+
 .fi_link {
     display: flex;
     justify-content: center;
@@ -279,6 +319,9 @@ intro_FEATURES
     font-weight: 400; 
     text-decoration: none;
     transition: .2s linear;
+}
+.features_item.the_night > li > .fi_link{
+    color: #c9c9c9;
 }
 .fi_link > i {
     height: 100%;
@@ -303,9 +346,22 @@ intro_FEATURES
 .fi_img_5{
     content: url(features/feature_5.png);
 }
-
-
-.fi_link:hover {
+.features_item.the_night > li > .fi_link >.fi_img_1{
+    content: url(features/feature_1n.png);
+}
+.features_item.the_night > li > .fi_link >.fi_img_2{
+    content: url(features/feature_2n.png);
+}
+.features_item.the_night > li > .fi_link >.fi_img_3{
+    content: url(features/feature_3n.png);
+}
+.features_item.the_night > li > .fi_link >.fi_img_4{
+    content: url(features/feature_4n.png);
+}
+.features_item.the_night > li > .fi_link >.fi_img_5{
+    content: url(features/feature_5n.png);
+}
+.features_item.the_night > li > .fi_link:hover, .fi_link:hover {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -315,25 +371,31 @@ intro_FEATURES
     font-weight: 400; 
     text-decoration: none;
 }
-.fi_link:hover > i {
+
+.features_item.the_night > li > .fi_link:hover > i,.fi_link:hover > i {
     height: 100%;
     max-height: 50px;
     width: max-content;
     margin: auto;
     margin-bottom: 25px;
 }
+.features_item.the_night > li > .fi_link:hover >.fi_img_1,
 .fi_link:hover >.fi_img_1{
     content: url(features/feature_1u.png);
 }
+.features_item.the_night > li > .fi_link:hover >.fi_img_2,
 .fi_link:hover >.fi_img_2{
     content: url(features/feature_2u.png);
 }
+.features_item.the_night > li > .fi_link:hover >.fi_img_3,
 .fi_link:hover >.fi_img_3{
     content: url(features/feature_3u.png);
 }
+.features_item.the_night > li > .fi_link:hover >.fi_img_4,
 .fi_link:hover >.fi_img_4{
     content: url(features/feature_4u.png);
 }
+.features_item.the_night > li > .fi_link:hover >.fi_img_5,
 .fi_link:hover >.fi_img_5{
     content: url(features/feature_5u.png);
 }
@@ -378,8 +440,18 @@ clients_block
 .slc_left {
     content: url(features/arrow_l.png);
 }
+body.the_night > .container >
+.container_clients > .clients_list >
+.slc_list.slc_rl > .slc_left {
+    content: url(features/arrow_ln.png);
+}
 .slc_right {
     content: url(features/arrow_r.png);
+}
+body.the_night > .container >
+.container_clients > .clients_list >
+.slc_list.slc_rl > .slc_right {
+    content: url(features/arrow_rn.png);
 }
 .ic_img_1 {
     content: url(logo_clients/l1.png);
@@ -397,16 +469,29 @@ clients_block
     content: url(logo_clients/l5.png);
 }
 
-
+body.the_night > .container >
+.container_clients > .clients_list >
+.slc_list.slc_rl:hover > .slc_left,
 .slc_list.slc_rl:hover > .slc_left {
     content: url(features/arrow_lu.png);
 }
+body.the_night > .container >
+.container_clients > .clients_list >
+.slc_list.slc_rl:hover > .slc_right,
 .slc_list.slc_rl:hover > .slc_right {
     content: url(features/arrow_ru.png);
 }
 
-
-
+body.the_night > .container >
+.container_clients >.intro_features_text > .intro_features_title {
+    color: #ffffff;
+}
+body.the_night > .container >
+.container_clients > .clients_list >
+ul {
+    background-color: #c9c9c9;
+    border-radius: 50px;
+}
 
 /* ----------------
     footer
@@ -487,3 +572,17 @@ footer {
 .i_media:hover > .media_i5 {
     content: url(social_media/RSS_u.png);
 }
+
+
+
+
+/* --------------------------------------------------- */
+/*                      OUR BLOG                       */
+/* --------------------------------------------------- */
+
+.intro_blogs{
+    height: 1660px;
+    background-color: #fff;
+}
+
+
