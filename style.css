@@ -274,8 +274,7 @@ body.the_night > .intro_features_background {
     font-weight: 300;  /* жжирность шрифта*/
     margin-bottom: 35px; /*оцтуп снизу*/
 }
-body.the_night > .intro_features_background > .container >
-.container_features >.intro_features_text > .intro_features_title {
+.intro_features_text.the_night > .intro_features_title {
     color: #ffffff;
 }
 
@@ -580,9 +579,95 @@ footer {
 /*                      OUR BLOG                       */
 /* --------------------------------------------------- */
 
+
 .intro_blogs{
-    height: 1660px;
-    background-color: #fff;
+    margin-top: 110px;
+    height: max-content;
+    min-height: 890px;
+    background:#ffffff url(image__site/Background_1.png)
+}
+.intro_blogs> .container {
+    padding: 60px 0;
+}
+.titel_blogs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    max-height: 265px;
+    margin-bottom: 60px;
+}
+.our_blogs {
+    height: max-content;
+    max-height: max-content;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.ourBlogs.notNull {
+    width: 100%;
+    max-width: 50%;
+    height: max-content;
+    padding: 35px;
+}
+.ourBlogs.notNull > .ob_img {
+    margin: 0 auto;
+    max-width: 460px;
+    width: 100%;
+}
+.ourBlogs.notNull > .ob_title{
+    margin-bottom: 20px;
+    width: 100%;
 }
 
+.ourBlogs.notNull > .ob_text {
+    margin-bottom: 20px;
+    width: 100%;
+}
+.ourBlogs.notNull > .ob_fullLink {
+    margin-bottom: 20px;
+    width: 100%;
+    
+}
+.ob_title > p {
+    font-family: 'Lato', sans-serif; 
+    font-size:  20px; 
+    font-weight: 400;
+    color: black; 
+    margin: 20px 0 auto;
+    text-align: center;
+}
+.ob_text > p {
+    text-align: center;
+    margin: 0;
+}
 
+.ob_fullLink > p {
+    text-align: center;
+    margin: 0;
+    transition: .1s linear;
+}
+.ob_fullLink {
+    font-family: 'Open Sans', sans-serif;/*Задаем шрифт для body*/
+    font-size: 14px;/*Задаем размер шрифта*/
+    color: #606060; /*Задаем свет шрифта*/
+    font-weight: 400;  /* жжирность шрифта*/
+}
+.intro_features_text.the_night > .intro_features_line {
+    background-color:#ffffff;
+}
+.intro_features_text.the_night > .intro_features_subtitle {
+    color: #ffffff;
+}
+body.the_night > .intro_blogs{
+    background:#000000 url(image__site/Background_1_night.png)
+}
+body.the_night > .intro_blogs > .container > 
+.our_blogs > .ourBlogs.notNull > .ob_title > p {
+    color: #ffffff;
+}
+.ob_fullLink:hover > p {
+    text-align: center;
+    margin: 0;
+    color: #2980b9;
+}
