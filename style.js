@@ -2,6 +2,7 @@
  const nigthStyleBox = [
     document.querySelector("body"),
     document.querySelector(".features_item"),
+    document.querySelector(".intro_features_text"),
  ];
  function dark_on_or_off(){
   if(localStorage.getItem("dark_style") === "dark_on"){
