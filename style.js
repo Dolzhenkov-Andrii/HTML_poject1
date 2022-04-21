@@ -4,6 +4,7 @@
     document.querySelector(".features_item"),
     document.querySelector(".intro_features_text"),
  ];
+
  function dark_on_or_off(){
   if(localStorage.getItem("dark_style") === "dark_on"){
     for (let my_class_key of nigthStyleBox){
@@ -20,6 +21,7 @@
   }
  }   
  dark_on_or_off();
+ 
 document.querySelector(".day_night").addEventListener("click", function(){
     if(localStorage.getItem("dark_style") === "dark_on"){
         localStorage.removeItem("dark_style");
