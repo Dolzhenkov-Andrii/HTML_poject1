@@ -5,7 +5,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&family=Open+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" charset="UTF-8" href="style.css">
+    <link rel="stylesheet" charset="UTF-8" href="/style.css">
     <title>Our blog</title>
 </head>
 <body>
@@ -15,14 +15,14 @@
 <header class="header">
     <div class="container">
         <nav class="nav">
-            <a class="nav_link" href="index.html">home</a>
+            <a class="nav_link" href="/">home</a>
             <a class="nav_link" href="###">services</a>
             <a class="nav_link" href="###">Portfolio</a>
         </nav>
         <button class="day_night" href="###">wds</button>
         <nav class="nav">
             <a class="nav_link" href="###">our team</a>
-            <a class="nav_link" href="our_blog.html">our blog</a>
+            <a class="nav_link" href="/our_blog">our blog</a>
             <a class="nav_link" href="###">Contact us</a>
         </nav>
     </div>
@@ -43,6 +43,16 @@
         </div>
         <script src="u_blog.js"></script>
         <div class="our_blogs">
+
+            {% for post in blog_posts %}
+                <div class="ourBlogs">
+                    <div class="ob_img ob_img0"></div>
+                    <div class="ob_title"><p><span id="ob_title0"></span></p></div>
+                    <div class="ob_text"><p><span id="ob_text0"></span></p></div>
+                    <a href="#" class="ob_fullLink"><p><span id="ob_fullLink0"></span></p></a>
+                </div>
+            {% endfor %}
+
             <div class="ourBlogs">
                 <div class="ob_img ob_img0"></div>
                 <div class="ob_title"><p><span id="ob_title0"></span></p></div>
@@ -103,6 +113,6 @@
         </div>
     </div>
 </footer>
-<script src="style.js"></script>
+<script src="/style.js"></script>
 </body>
 </html>
