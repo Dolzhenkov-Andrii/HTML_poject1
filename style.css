@@ -611,7 +611,9 @@ footer {
     height: max-content;
     padding: 35px;
 }
-.ourBlogs.notNull > .ob_img {
+.ob_img {
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
     max-width: 460px;
     width: 100%;

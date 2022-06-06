@@ -41,54 +41,20 @@
                 </div>
             </div>
         </div>
-        <script src="u_blog.js"></script>
+        <!-- <script src="u_blog.js"></script> -->
+        <!-- ================================================================================================ -->
         <div class="our_blogs">
-
-            {% for post in blog_posts %}
-                <div class="ourBlogs">
-                    <div class="ob_img ob_img0"></div>
-                    <div class="ob_title"><p><span id="ob_title0"></span></p></div>
-                    <div class="ob_text"><p><span id="ob_text0"></span></p></div>
-                    <a href="#" class="ob_fullLink"><p><span id="ob_fullLink0"></span></p></a>
+            {% for post in blog_posts -%}
+                {% if blog_posts.index(post) < 6 -%}
+                    <div class="ourBlogs notNull">
+                    <img src="{{ post.get('img_link') }}" class="ob_img" >
+                    <div class="ob_title"><p>{{ post.get('title') }}</p></div>
+                    <div class="ob_text"><p>{{ post.get('article') }}</p></div>
+                    <a href="#" class="ob_fullLink"><p>Read more</p></a>
                 </div>
-            {% endfor %}
-
-            <div class="ourBlogs">
-                <div class="ob_img ob_img0"></div>
-                <div class="ob_title"><p><span id="ob_title0"></span></p></div>
-                <div class="ob_text"><p><span id="ob_text0"></span></p></div>
-                <a href="#" class="ob_fullLink"><p><span id="ob_fullLink0"></span></p></a>
-            </div>
-            <div class="ourBlogs">
-                <div class="ob_img ob_img1"></div>
-                <div class="ob_title"><p><span id="ob_title1"></span></p></div>
-                <div class="ob_text"><p><span id="ob_text1"></span></p></div>
-                <a href="#" class="ob_fullLink"><p><span id="ob_fullLink1"></span></p></a>
-            </div>
-            <div class="ourBlogs">
-                <div class="ob_img ob_img2"></div>
-                <div class="ob_title"><p><span id="ob_title2"></span></p></div>
-                <div class="ob_text"><p><span id="ob_text2"></span></p></div>
-                <a href="#" class="ob_fullLink"><p><span id="ob_fullLink2"></span></p></a>
-            </div>
-            <div class="ourBlogs">
-                <div class="ob_img ob_img3"></div>
-                <div class="ob_title"><p><span id="ob_title3"></span></p></div>
-                <div class="ob_text"><p><span id="ob_text3"></span></p></div>
-                <a href="#" class="ob_fullLink"><p><span id="ob_fullLink3"></span></p></a>
-            </div>
-            <div class="ourBlogs">
-                <div class="ob_img ob_img4"></div>
-                <div class="ob_title"><p><span id="ob_title4"></span></p></div>
-                <div class="ob_text"><p><span id="ob_text4"></span></p></div>
-                <a href="#" class="ob_fullLink"><p><span id="ob_fullLink4"></span></p></a>
-            </div>
-            <div class="ourBlogs">
-                <div class="ob_img ob_img5"></div>
-                <div class="ob_title"><p><span id="ob_title5"></span></p></div>
-                <div class="ob_text"><p><span id="ob_text5"></span></p></div>
-                <a href="#" class="ob_fullLink"><p><span id="ob_fullLink5"></span></p></a>
-            </div>
+                {% endif -%}
+            {% endfor -%}
+            <!-- ================================================================================================ -->
         </div>
     </div>
 </div>
