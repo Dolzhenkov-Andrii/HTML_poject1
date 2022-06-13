@@ -1,7 +1,12 @@
 
 import os
+import urllib
+
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader
+
+from decorators import validator_decorator
+
 
 
 blog_posts = [
@@ -35,13 +40,16 @@ blog_posts = [
     'title': "Nunc sodales nec ante eget sollicitudin",
     'article': "Pellentesque imperdiet sem nec pellentesque luctus. Sed nisl elit, tempus sed ultricies vel, laoreet ut magna. In a condimentum nulla. Maecenas sem tellus, blandit a felis at, luctus lobortis erat.",
   },
+  {
+    'img_link': "/blog_img/bimg_6.png",
+    'title': "Nunc sodales nec ante eget sollicitudin",
+    'article': "Pellentesque imperdiet sem nec pellentesque luctus. Sed nisl elit, tempus sed ultricies vel, laoreet ut magna. In a condimentum nulla. Maecenas sem tellus, blandit a felis at, luctus lobortis erat.",
+  }
 ]
  
 
 class web_server(BaseHTTPRequestHandler):
 
-
-  
   def do_GET(self):
     if self.path == '/':
         self.path = '/index.html'
@@ -54,12 +62,9 @@ class web_server(BaseHTTPRequestHandler):
       file_loader = FileSystemLoader('')
       env = Environment(loader=file_loader)
       templ = env.get_template('our_blog.html')
-      file_to_open = templ.render(blog_posts=blog_posts).encode()
       
+      file_to_open = templ.render(blog_posts=blog_posts[:-1]).encode()
     self.send_response(200)
-    # except:
-    #     file_to_open = "File not found"
-    #     self.send_response(404)
     self.end_headers()
     self.wfile.write(file_to_open)
     print("Path (GET): ", self.path)
@@ -70,26 +75,15 @@ class web_server(BaseHTTPRequestHandler):
     self.end_headers()
     self.wfile.write(file_to_open.encode('utf-8'))
   
-  
-  def do_POST(self):
-    content_length = int(self.headers['Content-Length'])
-    post_data = self.rfile.read(content_length).decode()
-    print('POST: data ---- ' , post_data)
-    email = (post_data.split('&'))[0]
-    email = email[6:]
-    password = (post_data.split('&'))[1]
-    password = password[9:]
-    print('email = ', email)
-    print('password = ', password)
-    if(email == '''posttest%40'''+'''gmail.com''' and password == '''Qwerty%2B%21'''):
-      self.do_GET()
-      print("Path (POST): ", self.path)
-    else:
-      self.my404()
-      print("Path (my404): ", self.path)
+  @validator_decorator
+  def do_POST(self, post_data):
+    email, password = post_data['email'][0], post_data['password'][0]
+    if(email == 'posttest@gmail.com' and password == 'Qwerty+!'):
+      # print("Path (POST): ", self.path)
+      return self.do_GET()
+    # print("Path (my404): ", self.path)
+    return self.my404()
     
-      
-      
 
 httpd = HTTPServer(('127.0.0.1', 9000), web_server)
 httpd.serve_forever()
