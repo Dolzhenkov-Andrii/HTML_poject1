@@ -1,3 +1,4 @@
+
 import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader
@@ -36,31 +37,61 @@ blog_posts = [
   },
 ]
  
+
 class web_server(BaseHTTPRequestHandler):
 
-    def do_GET(self):
-        if self.path == '/':
-            self.path = '/index.html'
-        html_file_exist = f'{self.path[1:]}.html'
-        if os.path.exists(html_file_exist):
-          file_to_open = open(html_file_exist, 'rb').read()
-        else:
-          file_to_open = open(self.path[1:], 'rb').read()
-        if self.path == '/our_blog':
-          file_loader = FileSystemLoader('')
-          env = Environment(loader=file_loader)
-          templ = env.get_template('our_blog.html')
-          file_to_open = templ.render(blog_posts=blog_posts).encode()
-          
-        self.send_response(200)
-        # except:
-        #     file_to_open = "File not found"
-        #     self.send_response(404)
-        self.end_headers()
-        self.wfile.write(file_to_open)
 
+  
+  def do_GET(self):
+    if self.path == '/':
+        self.path = '/index.html'
+    html_file_exist = f'{self.path[1:]}.html'
+    if os.path.exists(html_file_exist):
+      file_to_open = open(html_file_exist, 'rb').read()
+    else:
+      file_to_open = open(self.path[1:], 'rb').read()
+    if self.path == '/our_blog':
+      file_loader = FileSystemLoader('')
+      env = Environment(loader=file_loader)
+      templ = env.get_template('our_blog.html')
+      file_to_open = templ.render(blog_posts=blog_posts).encode()
+      
+    self.send_response(200)
+    # except:
+    #     file_to_open = "File not found"
+    #     self.send_response(404)
+    self.end_headers()
+    self.wfile.write(file_to_open)
+    print("Path (GET): ", self.path)
+  
+  def my404(self):
+    file_to_open = "File not found"
+    self.send_response(404)
+    self.end_headers()
+    self.wfile.write(file_to_open.encode('utf-8'))
+  
+  
+  def do_POST(self):
+    content_length = int(self.headers['Content-Length'])
+    post_data = self.rfile.read(content_length).decode()
+    print('POST: data ---- ' , post_data)
+    email = (post_data.split('&'))[0]
+    email = email[6:]
+    password = (post_data.split('&'))[1]
+    password = password[9:]
+    print('email = ', email)
+    print('password = ', password)
+    if(email == '''posttest%40'''+'''gmail.com''' and password == '''Qwerty%2B%21'''):
+      self.do_GET()
+      print("Path (POST): ", self.path)
+    else:
+      self.my404()
+      print("Path (my404): ", self.path)
+    
+      
+      
 
-httpd = HTTPServer(('127.0.0.1', 8000), web_server)
+httpd = HTTPServer(('127.0.0.1', 9000), web_server)
 httpd.serve_forever()
     
     

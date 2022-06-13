@@ -674,3 +674,46 @@ body.the_night > .intro_blogs > .container >
     margin: 0;
     color: #2980b9;
 }
+
+/* --------------------------------------------------- */
+/*                      CONNECTING                       */
+/* --------------------------------------------------- */
+
+.connecting_block {
+    width: max-content;
+    padding: 0 20px;
+    min-height: 320px;
+    height: max-content;
+    max-height: max-content;
+    display: flow-root;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #c9c9c9; /*цвет линии*/
+    margin: 0 auto; /*расположение по центру*/
+    border-radius: 10px; /*закругление*/
+    border: 0; /*убираем рамку*/
+    height: 1px; /*толщина линии*/
+    opacity: .70; /*прозрачность*/
+}
+body.the_night > .intro_blogs > .container > 
+.connecting_block > form >.block_input > .ob_title > p {
+    color: #ffffff;
+}
+.block_input {
+    text-align: center;
+    padding-bottom: 50px;
+}
+.inputs, .button--start,.contin {
+    text-align: center;
+    color: #ffffff;
+}
+
+body.the_night > .intro_blogs > .container > 
+.connecting_block  {
+    background-color: #606060; /*цвет линии*/
+    margin: 0 auto; /*расположение по центру*/
+    border-radius: 10px; /*закругление*/
+    border: 0; /*убираем рамку*/
+    height: 1px; /*толщина линии*/
+    opacity: .70; /*прозрачность*/
+}
