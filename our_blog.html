@@ -46,12 +46,12 @@
         <div class="our_blogs">
             {% for post in blog_posts %}
                 <div class="ourBlogs notNull">
-                    <img src="{{ post.get('img_link') }}" class="ob_img" />
+                    <img src="{{ post.get('photo') }}" class="ob_img" />
                     <div class="ob_title">
                         <p>{{ post.get('title') }}</p>
                     </div>
                     <div class="ob_text">
-                        <p>{{ post.get('article') }}</p>
+                        <p>{{ post.get('text') }}</p>
                     </div>
                     <a href="#" class="ob_fullLink">
                         <p>Read more</p>
