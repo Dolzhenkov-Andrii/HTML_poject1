@@ -50,3 +50,5 @@ class ORM_my:
 #     print('='*10)
 
 # img_us = myDB.select("SELECT photo FROM User_Photo INNER JOIN Photo_Post ON User_Photo.id=Photo_Post.photo_id AND Photo_Post.photo_id={id}")  
+
+

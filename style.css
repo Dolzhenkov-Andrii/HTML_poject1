@@ -28,7 +28,9 @@ h1, h2, h3, h4, h5, h6 {
 p {
    margin: 0 0 10px 0; /*также убераем отступ текста <p> сверху, слува и справа, снизу оставляем 10*/
 }
-
+a {
+    text-decoration: none;
+}
 ul, li {
     padding: 0;
     list-style: none;
@@ -481,7 +483,7 @@ body.the_night > .container >
 .slc_list.slc_rl:hover > .slc_right {
     content: url(features/arrow_ru.png);
 }
-
+/* ================================================================================================================================================================================================================================================ */
 body.the_night > .container >
 .container_clients >.intro_features_text > .intro_features_title {
     color: #ffffff;
@@ -716,4 +718,77 @@ body.the_night > .intro_blogs > .container >
     border: 0; /*убираем рамку*/
     height: 1px; /*толщина линии*/
     opacity: .70; /*прозрачность*/
+}
+
+.slider_blog{
+    width: 100%;
+    min-width: max-content;
+    display: flex;
+    justify-content: center;  
+}
+.sl_blog {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    
+}
+body.the_night > .intro_blogs >
+.container > .slider_blog > .slide_left>
+.slc_list.slc_rl > .slc_left {
+    content: url(features/arrow_ln.png);
+}
+body.the_night > .intro_blogs >
+.container > .slider_blog >.slide_right >
+.slc_list.slc_rl > .slc_right {
+    content: url(features/arrow_rn.png);
+}
+body.the_night > .intro_blogs >
+.container > .slider_blog > .slide_left>
+.slc_list.slc_rl:hover > .slc_left,
+.slc_list.slc_rl:hover > .slc_left {
+    content: url(features/arrow_lu.png);
+}
+body.the_night > .intro_blogs >
+.container > .slider_blog >.slide_right >
+.slc_list.slc_rl:hover > .slc_right,
+.slc_list.slc_rl:hover > .slc_right {
+    content: url(features/arrow_ru.png);
+}
+.slide_left, .slide_right {
+    width: 40px;
+    text-align: center;
+}
+.sl_blog {
+    display: flex;
+    justify-content: space-between;
+    
+}
+.hr_curent {
+    width: 40px;
+    text-align: center;
+}
+body.the_night > .intro_blogs >
+.container > .slider_blog > .sl_blog > .hr_curent >
+.ob_fullLink:hover > h3 {
+    text-align: center;
+    margin: 0;
+    color: #2980b9;
+}
+.ob_fullLink:hover > h3 {
+    text-align: center;
+    margin: 0;
+    color: #2980b9;
+}
+.number_link > h3 {
+    text-align: center;
+    margin: 0;
+    color: #2980b9;
+    font-size: 22px;
+}
+.this_list{
+    text-align: center;
+    margin-bottom: 5px;
+    color: #2980b9;
+    font-size: 22px;
+
 }

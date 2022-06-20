@@ -10,21 +10,41 @@ from b_d import orm
 myDB = orm.ORM_my(host='',user='oscura',password='Ujhs!!Gj04Rjktyj!((#',db='my_blog')
 
 
-def bPost():
-  user_post = myDB.select("select id, title, text from Post")
+def list_Post(start,size):
+  start = start*size
+  user_post = myDB.select(f"select id, title, text from Post LIMIT {start}, {size}")
   for id in user_post:
-    id.update(myDB.select(f"SELECT photo FROM User_Photo INNER JOIN Photo_Post ON User_Photo.id=Photo_Post.photo_id WHERE photo_id={id['id']}")[0])
+    id.update(myDB.select(f"SELECT photo FROM User_Photo INNER JOIN Photo_Post ON User_Photo.id=Photo_Post.photo_id WHERE post_id={id['id']}")[0])
   return user_post
-  
- 
 
+def corecting_curent_post(curent):
+  size_post = len(myDB.select("select id from Post"))
+  if curent <= 0 or curent > size_post//6:
+    return [1,'this_list']
+  else:
+    return [curent,'class="this_list"']
+
+def number_list(curent):
+    curent = corecting_curent_post(curent)[0]
+    st, en = 0, 5
+    while True:
+        if st <= curent <= en:
+            return list(range(st+1,en+1))
+        else:
+            st, en = st+5, en+5
+        
 
 
 class web_server(BaseHTTPRequestHandler):
-
+  
   def do_GET(self):
+    list_curent = int(1)
+    print('PATH [1] ===----',self.path)
     if self.path == '/':
         self.path = '/index.html'
+    if '/list_blog' in self.path: 
+        list_curent = corecting_curent_post(int(self.path[10:]))[0]  
+        self.path = '/our_blog'
     html_file_exist = f'{self.path[1:]}.html'
     if os.path.exists(html_file_exist):
       file_to_open = open(html_file_exist, 'rb').read()
@@ -34,7 +54,7 @@ class web_server(BaseHTTPRequestHandler):
       file_loader = FileSystemLoader('')
       env = Environment(loader=file_loader)
       templ = env.get_template('our_blog.html')
-      file_to_open = templ.render(blog_posts=bPost()).encode()
+      file_to_open = templ.render(blog_posts=list_Post(list_curent,6),number_list=number_list(list_curent),tmp_carent=list_curent,curent=list_curent,this_list=corecting_curent_post(list_curent)[1]).encode()
     self.send_response(200)
     self.end_headers()
     self.wfile.write(file_to_open)
