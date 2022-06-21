@@ -1,25 +1,40 @@
 
 import os
-import urllib
 
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from jinja2 import Environment, FileSystemLoader
 
 from decorators import validator_decorator
-from b_d import orm
-myDB = orm.ORM_my(host='',user='oscura',password='Ujhs!!Gj04Rjktyj!((#',db='my_blog')
 
+from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
+from databases.connection import Connection
+
+connection = Connection(
+  host=DB_HOST,
+  user=DB_USER,
+  password=DB_PASSWORD,
+  db=DB_NAME
+)
+
+### user_posts = Post.select(['id', 'title', 'text'], limit=[start, size]).join().join().get()
+### fasdf = Photo(connection)
+### 
+
+## id title ....
+## id post_id photo_id
+## id name user_id
+## SELECT id, title, text, User_Photo.name from Post JOIN Photo_Post ON Post.id=Photo_Post.post_id AND Post.id=PhotoPost.post_id
 
 def list_Post(start,size):
   start = start*size
-  user_post = myDB.select(f"select id, title, text from Post LIMIT {start}, {size}")
-  for id in user_post:
-    id.update(myDB.select(f"SELECT photo FROM User_Photo INNER JOIN Photo_Post ON User_Photo.id=Photo_Post.photo_id WHERE post_id={id['id']}")[0])
+  user_post = connection.select(f"select id, title, text from Post LIMIT {start}, {size}")
+  # for id in user_post:
+  #   id.update(myDB.select(f"SELECT photo FROM User_Photo JOIN Photo_Post ON User_Photo.id=Photo_Post.photo_id WHERE post_id={id['id']}")[0])
   return user_post
 
 def corecting_curent_post(curent):
-  size_post = len(myDB.select("select id from Post"))
-  if curent <= 0 or curent > size_post//6:
+  size_post = len(connection.select("select id from Post"))
+  if curent <= 0 or curent > size_post // 6:
     return [1,'this_list']
   else:
     return [curent,'class="this_list"']
@@ -32,14 +47,12 @@ def number_list(curent):
             return list(range(st+1,en+1))
         else:
             st, en = st+5, en+5
-        
 
 
 class web_server(BaseHTTPRequestHandler):
   
   def do_GET(self):
-    list_curent = int(1)
-    print('PATH [1] ===----',self.path)
+    list_curent = 1
     if self.path == '/':
         self.path = '/index.html'
     if '/list_blog' in self.path: 
