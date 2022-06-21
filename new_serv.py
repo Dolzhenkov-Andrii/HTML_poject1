@@ -28,6 +28,7 @@ connection = Connection(
 def list_Post(start,size):
   start = start*size
   user_post = connection.select(f"select id, title, text from Post LIMIT {start}, {size}")
+  ## TO REMOVE
   # for id in user_post:
   #   id.update(myDB.select(f"SELECT photo FROM User_Photo JOIN Photo_Post ON User_Photo.id=Photo_Post.photo_id WHERE post_id={id['id']}")[0])
   return user_post
@@ -36,6 +37,7 @@ def corecting_curent_post(curent):
   size_post = len(connection.select("select id from Post"))
   if curent <= 0 or curent > size_post // 6:
     return [1,'this_list']
+  ## Do not use else
   else:
     return [curent,'class="this_list"']
 
@@ -71,7 +73,7 @@ class web_server(BaseHTTPRequestHandler):
     self.send_response(200)
     self.end_headers()
     self.wfile.write(file_to_open)
-    print("Path (GET): ", self.path)
+    # print("Path (GET): ", self.path)
   
   def my404(self):
     file_to_open = "File not found"
