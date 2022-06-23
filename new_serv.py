@@ -10,11 +10,11 @@ from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
 from databases.connection import Connection
 
 connection = Connection(
-  host=DB_HOST,
-  user=DB_USER,
-  password=DB_PASSWORD,
-  db=DB_NAME
-)
+  DB_HOST, 
+  DB_USER, 
+  DB_PASSWORD, 
+  DB_NAME
+  )
 
 ### user_posts = Post.select(['id', 'title', 'text'], limit=[start, size]).join().join().get()
 ### fasdf = Photo(connection)
