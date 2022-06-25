@@ -125,10 +125,10 @@ Intro
     justify-content: center; /*Элементы распалагают по центру*/
     height: 700px; /*Высота блока intro*/
     padding: 110px;/* Отступ который равен высоты шапки*/
-    background:#2f3030 url(image__site/image__start.jpg) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
+    background:#2f3030 url(static/image__site/image__start.jpg) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
 }
 body.the_night > .intro{
-    background:#000000 url(image__site/image__start_night.jpg) center /cover; 
+    background:#000000 url(static/image__site/image__start_night.jpg) center /cover; 
 }
 .container_intro{
     margin: 0 auto; /*Выравниваем его по центру*/
@@ -248,10 +248,10 @@ intro_FEATURES
     flex-direction: column; /*каждый элемент будет начинаться с новой строки*/
     justify-content: center; /*Элементы распалагают по центру*/
     height: 435px; /*Высота блока*/
-    background:#ffffff url(image__site/Background_1.png) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
+    background:#ffffff url(static/image__site/Background_1.png) center /cover; /*В начале цвет фона на случай если не прогрузиться картинка,"url(адрес картинки)"- картинка вместо фона,center - распалагает ее по центру, /cover - распределяет на всю ширину и высоту блока*/
 }
 body.the_night > .intro_features_background {
-    background:#000000 url(image__site/Background_1_night.png) center /cover;
+    background:#000000 url(static/image__site/Background_1_night.png) center /cover;
 }
 .container_features{
     display: flex; /*Устанавлием значение Флэкс*/
@@ -334,34 +334,34 @@ body.the_night > .intro_features_background {
     transition: .2s linear;
 }
 .fi_img_1{
-    content: url(features/feature_1.png);
+    content: url(static/features/feature_1.png);
 }
 .fi_img_2{
-    content: url(features/feature_2.png);
+    content: url(static/features/feature_2.png);
 }
 .fi_img_3{
-    content: url(features/feature_3.png);
+    content: url(static/features/feature_3.png);
 }
 .fi_img_4{
-    content: url(features/feature_4.png);
+    content: url(static/features/feature_4.png);
 }
 .fi_img_5{
-    content: url(features/feature_5.png);
+    content: url(static/features/feature_5.png);
 }
 .features_item.the_night > li > .fi_link >.fi_img_1{
-    content: url(features/feature_1n.png);
+    content: url(static/features/feature_1n.png);
 }
 .features_item.the_night > li > .fi_link >.fi_img_2{
-    content: url(features/feature_2n.png);
+    content: url(static/features/feature_2n.png);
 }
 .features_item.the_night > li > .fi_link >.fi_img_3{
-    content: url(features/feature_3n.png);
+    content: url(static/features/feature_3n.png);
 }
 .features_item.the_night > li > .fi_link >.fi_img_4{
-    content: url(features/feature_4n.png);
+    content: url(static/features/feature_4n.png);
 }
 .features_item.the_night > li > .fi_link >.fi_img_5{
-    content: url(features/feature_5n.png);
+    content: url(static/features/feature_5n.png);
 }
 .features_item.the_night > li > .fi_link:hover, .fi_link:hover {
     display: flex;
@@ -383,23 +383,23 @@ body.the_night > .intro_features_background {
 }
 .features_item.the_night > li > .fi_link:hover >.fi_img_1,
 .fi_link:hover >.fi_img_1{
-    content: url(features/feature_1u.png);
+    content: url(static/features/feature_1u.png);
 }
 .features_item.the_night > li > .fi_link:hover >.fi_img_2,
 .fi_link:hover >.fi_img_2{
-    content: url(features/feature_2u.png);
+    content: url(static/features/feature_2u.png);
 }
 .features_item.the_night > li > .fi_link:hover >.fi_img_3,
 .fi_link:hover >.fi_img_3{
-    content: url(features/feature_3u.png);
+    content: url(static/features/feature_3u.png);
 }
 .features_item.the_night > li > .fi_link:hover >.fi_img_4,
 .fi_link:hover >.fi_img_4{
-    content: url(features/feature_4u.png);
+    content: url(static/features/feature_4u.png);
 }
 .features_item.the_night > li > .fi_link:hover >.fi_img_5,
 .fi_link:hover >.fi_img_5{
-    content: url(features/feature_5u.png);
+    content: url(static/features/feature_5u.png);
 }
 
 /* ----------------
@@ -440,48 +440,48 @@ clients_block
     height:  100%;
 }
 .slc_left {
-    content: url(features/arrow_l.png);
+    content: url(static/features/arrow_l.png);
 }
 body.the_night > .container >
 .container_clients > .clients_list >
 .slc_list.slc_rl > .slc_left {
-    content: url(features/arrow_ln.png);
+    content: url(static/features/arrow_ln.png);
 }
 .slc_right {
-    content: url(features/arrow_r.png);
+    content: url(static/features/arrow_r.png);
 }
 body.the_night > .container >
 .container_clients > .clients_list >
 .slc_list.slc_rl > .slc_right {
-    content: url(features/arrow_rn.png);
+    content: url(static/features/arrow_rn.png);
 }
 .ic_img_1 {
-    content: url(logo_clients/l1.png);
+    content: url(static/logo_clients/l1.png);
 }
 .ic_img_2 {
-    content: url(logo_clients/l2.png);
+    content: url(static/logo_clients/l2.png);
 }
 .ic_img_3 {
-    content: url(logo_clients/l3.png);
+    content: url(static/logo_clients/l3.png);
 }
 .ic_img_4 {
-    content: url(logo_clients/l4.png);
+    content: url(static/logo_clients/l4.png);
 }
 .ic_img_5 {
-    content: url(logo_clients/l5.png);
+    content: url(static/logo_clients/l5.png);
 }
 
 body.the_night > .container >
 .container_clients > .clients_list >
 .slc_list.slc_rl:hover > .slc_left,
 .slc_list.slc_rl:hover > .slc_left {
-    content: url(features/arrow_lu.png);
+    content: url(static/features/arrow_lu.png);
 }
 body.the_night > .container >
 .container_clients > .clients_list >
 .slc_list.slc_rl:hover > .slc_right,
 .slc_list.slc_rl:hover > .slc_right {
-    content: url(features/arrow_ru.png);
+    content: url(static/features/arrow_ru.png);
 }
 /* ================================================================================================================================================================================================================================================ */
 body.the_night > .container >
@@ -545,34 +545,34 @@ footer {
     justify-content: space-between;
 }
 .media_i1 {
-    content: url(social_media/Twitter.png);
+    content: url(static/social_media/Twitter.png);
 }
 .media_i2 {
-    content: url(social_media/Facebook.png);
+    content: url(static/social_media/Facebook.png);
 }
 .media_i3 {
-    content: url(social_media/Google.png);
+    content: url(static/social_media/Google.png);
 }
 .media_i4 {
-    content: url(social_media/Pinterest.png);
+    content: url(static/social_media/Pinterest.png);
 }
 .media_i5 {
-    content: url(social_media/RSS.png);
+    content: url(static/social_media/RSS.png);
 }
 .i_media:hover > .media_i1 {
-    content: url(social_media/Twitter_u.png);
+    content: url(static/social_media/Twitter_u.png);
 }
 .i_media:hover > .media_i2 {
-    content: url(social_media/Facebook_u.png);
+    content: url(static/social_media/Facebook_u.png);
 }
 .i_media:hover > .media_i3 {
-    content: url(social_media/Google_u.png);
+    content: url(static/social_media/Google_u.png);
 }
 .i_media:hover > .media_i4 {
-    content: url(social_media/Pinterest_u.png);
+    content: url(static/social_media/Pinterest_u.png);
 }
 .i_media:hover > .media_i5 {
-    content: url(social_media/RSS_u.png);
+    content: url(static/social_media/RSS_u.png);
 }
 
 
@@ -587,7 +587,7 @@ footer {
     margin-top: 110px;
     height: max-content;
     min-height: 890px;
-    background:#ffffff url(image__site/Background_1.png)
+    background:#ffffff url(static/image__site/Background_1.png)
 }
 .intro_blogs> .container {
     padding: 60px 0;
@@ -665,7 +665,7 @@ footer {
     color: #ffffff;
 }
 body.the_night > .intro_blogs{
-    background:#000000 url(image__site/Background_1_night.png)
+    background:#000000 url(static/image__site/Background_1_night.png)
 }
 body.the_night > .intro_blogs > .container > 
 .our_blogs > .ourBlogs.notNull > .ob_title > p {
@@ -735,24 +735,24 @@ body.the_night > .intro_blogs > .container >
 body.the_night > .intro_blogs >
 .container > .slider_blog > .slide_left>
 .slc_list.slc_rl > .slc_left {
-    content: url(features/arrow_ln.png);
+    content: url(static/features/arrow_ln.png);
 }
 body.the_night > .intro_blogs >
 .container > .slider_blog >.slide_right >
 .slc_list.slc_rl > .slc_right {
-    content: url(features/arrow_rn.png);
+    content: url(static/features/arrow_rn.png);
 }
 body.the_night > .intro_blogs >
 .container > .slider_blog > .slide_left>
 .slc_list.slc_rl:hover > .slc_left,
 .slc_list.slc_rl:hover > .slc_left {
-    content: url(features/arrow_lu.png);
+    content: url(static/features/arrow_lu.png);
 }
 body.the_night > .intro_blogs >
 .container > .slider_blog >.slide_right >
 .slc_list.slc_rl:hover > .slc_right,
 .slc_list.slc_rl:hover > .slc_right {
-    content: url(features/arrow_ru.png);
+    content: url(static/features/arrow_ru.png);
 }
 .slide_left, .slide_right {
     width: 40px;

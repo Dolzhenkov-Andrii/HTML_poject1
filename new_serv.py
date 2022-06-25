@@ -9,6 +9,8 @@ from decorators import validator_decorator
 from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
 from databases.connection import Connection
 
+from databases.models.post import Post #<---------------------------------
+
 connection = Connection(
   DB_HOST, 
   DB_USER, 
@@ -16,30 +18,17 @@ connection = Connection(
   DB_NAME
   )
 
-### user_posts = Post.select(['id', 'title', 'text'], limit=[start, size]).join().join().get()
-### fasdf = Photo(connection)
-### 
-
-## id title ....
-## id post_id photo_id
-## id name user_id
-## SELECT id, title, text, User_Photo.name from Post JOIN Photo_Post ON Post.id=Photo_Post.post_id AND Post.id=PhotoPost.post_id
 
 def list_Post(start,size):
   start = start*size
-  user_post = connection.select(f"select id, title, text from Post LIMIT {start}, {size}")
-  ## TO REMOVE
-  # for id in user_post:
-  #   id.update(myDB.select(f"SELECT photo FROM User_Photo JOIN Photo_Post ON User_Photo.id=Photo_Post.photo_id WHERE post_id={id['id']}")[0])
-  return user_post
+  return Post(connection).getPost(f'{start}, {size}','Post.creation_date') #<---------------------------------
 
 def corecting_curent_post(curent):
-  size_post = len(connection.select("select id from Post"))
+  size_post = Post(connection).lenPost() #<---------------------------------
   if curent <= 0 or curent > size_post // 6:
-    return [1,'this_list']
+    return [1,'class="this_list"']
   ## Do not use else
-  else:
-    return [curent,'class="this_list"']
+  return [curent,'class="this_list"']
 
 def number_list(curent):
     curent = corecting_curent_post(curent)[0]

@@ -1,4 +1,4 @@
-from databases.models import BaseModel
+from databases.models.base import BaseModel
 
 
 class Photo(BaseModel):

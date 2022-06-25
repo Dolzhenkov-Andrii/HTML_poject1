@@ -11,29 +11,8 @@ class Connection:
             password=db_password,
             db=db_name,
             charset='utf8mb4',
-            cursorclass=DictCursor
+            cursorclass=DictCursor,
+            autocommit=True
         )
         print(f"Connected to {db_name}({db_host})")
-      
-        
-    # def select(self, sel_str):
-    #     try :
-    #         if 'select' or 'SELECT' in sel_str:
-    #             with self.connection.cursor() as cursor:
-    #                 cursor.execute(sel_str)
-    #                 query = []
-    #                 for row in cursor:
-    #                     # print('#4___| row : ',row)
-    #                     query.append(row)
-    #             return query
-    #         else:
-    #             return None
-    #     except:
-    #         ...
-                
-        
-        
-    # def __del__(self):
-    #     self.connection.close()
-        
-
+   
