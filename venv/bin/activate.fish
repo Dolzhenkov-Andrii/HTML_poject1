@@ -73,3 +73,9 @@ if test -z "$VIRTUAL_ENV_DISABLE_PROMPT"
 
     set -gx _OLD_FISH_PROMPT_OVERRIDE "$VIRTUAL_ENV"
 end
+
+
+set -xg DB_HOST "127.0.0.1"
+set -xg DB_PASSWORD "Ujhs!!Gj04Rjktyj!((#"
+set -xg DB_USER "oscura"
+set -xg DB_NAME "my_blog"

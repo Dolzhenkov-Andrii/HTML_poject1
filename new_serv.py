@@ -10,7 +10,10 @@ from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
 from databases.connection import Connection
 
 from databases.models.post import Post #<---------------------------------
-
+print('-'*15, DB_HOST, 
+  DB_USER, 
+  DB_PASSWORD, 
+  DB_NAME)
 connection = Connection(
   DB_HOST, 
   DB_USER, 

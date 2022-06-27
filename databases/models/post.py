@@ -18,10 +18,10 @@ class Post(BaseModel):
         self._join('JOIN', 'User_Photo', 'Photo_Post.photo_id','User_Photo.id')
         self._sort(sort)._limit(limit)
         return self._get()
-    
+    #Base!!!!
     def lenPost(self):
         return len(self._select(self.table_name,'id')._get())
-    
+    #Photo
     def updatePost(self, *value, condition=None):
         if 'photo' in ' '.join(value):
             self.table_name = 'User_Photo'
