@@ -6,20 +6,30 @@ from jinja2 import Environment, FileSystemLoader
 
 from decorators import validator_decorator
 
-from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
-from databases.connection import Connection
+from databases.connectionsql import Connection
+from databases.models.base import Post
+from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER 
 
-from databases.models.post import Post #<---------------------------------
-print('-'*15, DB_HOST, 
-  DB_USER, 
-  DB_PASSWORD, 
-  DB_NAME)
 connection = Connection(
-  DB_HOST, 
-  DB_USER, 
-  DB_PASSWORD, 
-  DB_NAME
-  )
+        DB_HOST, 
+        DB_USER, 
+        DB_PASSWORD, 
+        DB_NAME
+        )
+
+our_blog = Post().objects.select('Post.id', 'Post.title','Post.text', 'User_Photo.photo').FROM('Photo_Post').JOIN('Post',id='Photo_Post.post_id').JOIN('User_Photo',id='Photo_Post.photo_id').fetch(connection)
+
+# print(our_blog[0]._original_fields)
+# print(our_blog[0].objects)
+print(our_blog[0].id)
+print(our_blog[0].title)
+print(our_blog[0].photo)
+print(our_blog[1].id)
+print(our_blog[1].title)
+print(our_blog[1].photo)
+print(our_blog[2].id)
+print(our_blog[2].title)
+print(our_blog[2].photo)
 
 
 def list_Post(start,size):

@@ -1,15 +1,5 @@
-# from manager import Manager
-from collections import OrderedDict
 
 
-
-
-
-
-
-
-
-#===========================================================
 
 AND = 'AND '
 OR = 'OR '
@@ -142,88 +132,39 @@ class BaseMetodSQL:
         #==========================================
         return self
 
-     
+        
+        
+    # def _update(self,tableName,which=None, *column_date,):  
+    #     column_list = ','.join(column_date)
+    #     self.query = f'UPDATE {tableName} SET {column_list}'
+    #     if which:
+    #        self.query += f' WHERE {which}'  
+    #     return self
+
+    # def _delete(self, tableName, *condition):
+    #     condition_list = ','.join(condition)
+    #     self.query = f'UPDATE {tableName} WHERE {condition_list}'
+    #     return self
     
-#===========================================================
+    # def len(self,table_name):
+    #     return len(self._select(table_name,'id')._get())
 
-class Manager(BaseMetodSQL):
     
-    def __init__(self, model_class):
-        self.model_class = model_class
-        self._model_fields = model_class._original_fields.keys()
-        self.query = ''
+    # def _sort(self, table):
+    #     self.query += f" ORDER BY {table}"
+    #     return self
+          
+    # 
     
-    def __get_date(self,conector):
-      self.connection = conector
-      with self.connection._connection.cursor() as cursor:
-          cursor.execute(self.query)
-          query = []
-          for row in cursor:
-              query.append(row)
-      return query    
-       
-    def fetch(self,conector):
-        query = str(self.query)
-        db_results = self.__get_date(conector)
-        results = []
-        for row in db_results:
-            print('Manager - row',row)
-            model = self.model_class()
-            print('Manager - model',model)
-            print('Manager - model',self._model_fields)
-            for val,field in zip(self._model_fields, row.items()):
-                print('Manager - field and val', field[1], val)
-                setattr(model, val, field[1])
-            results.append(model)
-            print('Manager - model2',model)
-        return results
     
-#===========================================================
-#==================================================
-
-
-
-class Field:
     
-    pass
+#=================================================================================
 
-class IntegerField(Field):
-    
-    pass
+# # colum = ['Post.id', 'Post.title','Post.text', 'User_Photo.photo']
+# myModel = ModelComandsSQL()
+# myModel.select('Post.id', 'Post.title','Post.text', 'User_Photo.photo')
+# myModel.FROM('Photo_Post')
+# myModel.JOIN('Post',id='Photo_Post.post_id')
+# myModel.JOIN('User_Photo',id='Photo_Post.photo_id')
+# print(myModel.query)
 
-class CharField(Field):
-    
-    pass
-
-
-
-
-class ModelMeta(type):
-    
-    def __new__(mcs, class_name, parents, attributes):
-        print(class_name, parents, attributes)
-        fields = OrderedDict()
-        for k, v in attributes.items():
-            if isinstance(v, Field):
-                fields[k] = v
-                attributes[k] = None
-            
-        cla = super(ModelMeta, mcs).__new__(mcs, class_name, parents, attributes)
-        setattr(cla, '_model_name', attributes['__qualname__'].lower())
-        setattr(cla, '_original_fields', fields)
-        setattr(cla, 'objects', Manager(cla))
-        return cla
-
-
-class BaseModel(metaclass=ModelMeta):
-    pass
-
-
-
-
-class Post(BaseModel):
-    id = IntegerField()
-    title = IntegerField()
-    text = IntegerField()
-    photo = IntegerField()
-    
