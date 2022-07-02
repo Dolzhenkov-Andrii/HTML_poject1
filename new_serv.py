@@ -8,7 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from decorators import validator_decorator
 
-from databases.connectionsql import Connection
+from databases.connection import Connection
 from databases.models.base import Post
 from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
 
@@ -18,6 +18,7 @@ connection = Connection(
         DB_PASSWORD,
         DB_NAME
         )
+BaseManager.database_connection = connection
 
 our_blog = Post().objects\
           .select('Post.id', 'Post.title','Post.text', 'User_Photo.photo')\
