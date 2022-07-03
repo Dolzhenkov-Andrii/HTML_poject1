@@ -10,7 +10,6 @@ class MetaModel(type):
         Base meta class for models
     """
     manager_class = BaseManager
-
     def _get_manager(cls):
         return cls.manager_class(model_class=cls)
 

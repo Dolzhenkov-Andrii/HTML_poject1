@@ -9,33 +9,54 @@ class Post(BaseModel): # pylint: disable=too-few-public-methods
     """
         Post model class
     """
-    table_name = 'post'
+    table_name = 'Post'
     manager_class = BaseManager
-  
+
     def photo_posts(self):
         """
             Getting many-to-many photos
         """
         # PhotoPost
-        return PhotoPost.objects.filter(post_id=getattr(self, self.primary_key))
+        # return PhotoPost.objects.filter(post_id=getattr(self, self.primary_key))
 
 
-    def prefetch():
-        # JOIN
-        pass
+    # def prefetch():
+    #     # JOIN
+    #     pass
 
 
-class PhotoPost:
-    post = ForeignKey(Post, 'post_id', 'id')
-    photo = ForeignKey(Photo, 'post_id', 'id')
 
-    @property
-    def post(cls):
-        return Post
 
-    @property
-    def photo(cls):
-        return Photo.objects.get(id=self.photo_id)
+
+
+
+
+
+
+
+# class PhotoPost:
+#     post = ForeignKey(Post, 'post_id', 'id')
+#     photo = ForeignKey(Photo, 'post_id', 'id')
+
+#     @property
+#     def post(cls):
+#         return Post
+
+#     @property
+#     def photo(cls):
+#         return Photo.objects.get(id=self.photo_id)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## select -> 

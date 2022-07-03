@@ -9,38 +9,34 @@ from jinja2 import Environment, FileSystemLoader
 from decorators import validator_decorator
 
 from databases.connection import Connection
-from databases.models.base import Post
+from databases.models.post import Post
 from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
-
+from databases.managers.base import BaseManager
 connection = Connection(
         DB_HOST,
         DB_USER,
         DB_PASSWORD,
         DB_NAME
         )
-BaseManager.database_connection = connection
-
-our_blog = Post().objects\
-          .select('Post.id', 'Post.title','Post.text', 'User_Photo.photo')\
-          .FROM('Photo_Post')\
-          .JOIN('Post',id='Photo_Post.post_id')\
-          .JOIN('User_Photo',id='Photo_Post.photo_id')\
-          .fetch(connection)
+BaseManager.database_connection = connection._connection
+#====================================================================================
 
 
+
+#====================================================================================
 def post_list(start,size):
     """
       List of all post articles
     """
     start = start*size
-    return Post(connection).getPost(f'{start}, {size}','Post.creation_date')
+    return Post.objects.select('title','text').offset(f'{start}, {size}')
 
 
 def corecting_curent_post(curent):
     """
       Adds a class into html
     """
-    size_post = Post(connection).lenPost()
+    size_post = len(Post.objects.select('id').all())
     if curent <= 0 or curent > size_post // 6:
         return [1,'class="this_list"']
     ## Do not use else
@@ -69,7 +65,7 @@ class WebServer(BaseHTTPRequestHandler):
         """
           GET request handlers
         """
-        list_curent = 1
+        list_curent = 0
         if self.path == '/':
             self.path = '/index.html'
         if '/list_blog' in self.path:
