@@ -3,19 +3,27 @@
 """
 from databases.managers.base import BaseManager
 from databases.models.base import BaseModel
+from databases.models.postphoto import PhotoPost
+from databases.models.photo import Photo
 
 
-class Post(BaseModel): # pylint: disable=too-few-public-methods
+class Post(BaseModel):
     """
         Post model class
     """
     table_name = 'Post'
     manager_class = BaseManager
+    photo = None
+    id = None
 
     def photo_posts(self):
         """
             Getting many-to-many photos
         """
+        id_photo = PhotoPost.objects.filters('post_id',self.id).get_date[0]
+        self.photo = Photo.objects.filters(
+            'id',f'{id_photo.photo_id}').get_date[0]
+        return self
         # PhotoPost
         # return PhotoPost.objects.filter(post_id=getattr(self, self.primary_key))
 
@@ -23,14 +31,6 @@ class Post(BaseModel): # pylint: disable=too-few-public-methods
     # def prefetch():
     #     # JOIN
     #     pass
-
-
-
-
-
-
-
-
 
 
 
@@ -48,27 +48,16 @@ class Post(BaseModel): # pylint: disable=too-few-public-methods
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-## select -> 
+## select ->
     # 1. all
-    # 2. first 
+    # 2. first
     # 3. last
 # 4. limit
 # 5. offset
 
 # Post.objects.prefetch('photo_posts').photo_posts.prefetch('photo').first().photo
 
-## filter -> sql WHERE 
+## filter -> sql WHERE
 
 # Post.objects.first().photo_posts().first().photo -> Manager -> all, first, last -> filter
 

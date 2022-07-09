@@ -5,7 +5,7 @@ from databases.managers.base import BaseManager
 from databases.models.base import BaseModel
 
 
-class Post(BaseModel): # pylint: disable=too-few-public-methods
+class Photo(BaseModel): # pylint: disable=too-few-public-methods
     """
         Photo model class
     """

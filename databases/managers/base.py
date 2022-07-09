@@ -10,11 +10,12 @@ class BaseManager:
 
     def __init__(self, model_class):
         self.query = None
-        self.model_class = model_class
         connection = BaseManager.database_connection
         self.cursor = connection.cursor() # pylint: disable=no-member
+        self.model_class = model_class
 
-#select column_name from information_schema.columns where table_name = 'Post' and  table_schema = 'my_blog'
+#select column_name from information_schema.columns where
+# table_name = 'Post' and  table_schema = 'my_blog'
 # Закінчи метотд def get_date(self): повинен повертати обект або обєкти вже з данними із ДБ
     @property
     def get_date(self):
@@ -41,6 +42,22 @@ class BaseManager:
         self.query  = f"SELECT {fields_format} FROM {self.model_class.table_name} "
         return self
 
+    def join(self, table_name, val1, val2):
+        """
+            Join to table 'table_name'
+        """
+        self.query += f'JOIN {table_name} ON {table_name}.{val1} = {val2} '
+        return self
+
+    def filters(self, val1, val2):
+        """
+            Where equality
+        """
+        if not self.query:
+            self.select('*')
+        self.query += f'WHERE {val1} = {val2} '
+        return self
+
     def bulk_insert(self, rows: list):
         """
             Multiple insert
@@ -61,7 +78,7 @@ class BaseManager:
             Select All items
         """
 
-        if self.query:
+        if not self.query:
             self.select('*')
         return self.get_date
 
@@ -70,7 +87,7 @@ class BaseManager:
             Select first item
         """
 
-        if self.query:
+        if not self.query:
             self.select('*')
         self.query += f'order by {colum_name} asc limit 1'
         return self.get_date
@@ -80,7 +97,7 @@ class BaseManager:
             Select last item
         """
 
-        if self.query:
+        if not self.query:
             self.select('*')
         self.query += f'order by {colum_name} desc limit 1'
         return self.get_date
@@ -90,7 +107,7 @@ class BaseManager:
             Limit items from select
         """
 
-        if self.query:
+        if not self.query:
             self.select('*')
         self.query += f'limit {size}'
         return self.get_date
@@ -100,7 +117,7 @@ class BaseManager:
             Offset items from select
         """
 
-        if self.query:
+        if not self.query:
             self.select('*')
         self.query += 'limit ' + args
         return self.get_date

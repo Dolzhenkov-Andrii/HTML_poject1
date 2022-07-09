@@ -46,7 +46,7 @@
         <div class="our_blogs">
             {% for post in blog_posts %}
                 <div class="ourBlogs notNull">
-                    <img src="{{post.title}}" class="ob_img" />
+                    <img src="{{post.photo.photo}}" class="ob_img" />
                     <div class="ob_title">
                         <p>{{ post.title }}</p>
                     </div>
@@ -81,7 +81,7 @@
     </div>
 </div>
 <!-------- footer
----------> 
+--------->
 <footer class="footer">
     <div class="container">
         <div class="container_footer">

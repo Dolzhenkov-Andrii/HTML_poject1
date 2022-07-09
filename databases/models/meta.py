@@ -1,4 +1,3 @@
-# pylint: disable=no-value-for-parameter
 """
     Base meta module for models
 """

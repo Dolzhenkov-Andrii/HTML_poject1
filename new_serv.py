@@ -9,27 +9,27 @@ from jinja2 import Environment, FileSystemLoader
 from decorators import validator_decorator
 
 from databases.connection import Connection
+from databases.managers.base import BaseManager
 from databases.models.post import Post
 from config.db import DB_HOST, DB_NAME, DB_PASSWORD, DB_USER
-from databases.managers.base import BaseManager
+
 connection = Connection(
-        DB_HOST,
-        DB_USER,
-        DB_PASSWORD,
-        DB_NAME
-        )
+    DB_HOST,
+    DB_USER,
+    DB_PASSWORD,
+    DB_NAME
+)
 BaseManager.database_connection = connection._connection
-#====================================================================================
+# ====================================================================================
 
 
-
-#====================================================================================
-def post_list(start,size):
+# ====================================================================================
+def post_list(start, size):
     """
       List of all post articles
     """
     start = start*size
-    return Post.objects.select('title','text').offset(f'{start}, {size}')
+    return [post.photo_posts() for post in Post.objects.offset(f'{start}, {size}')]
 
 
 def corecting_curent_post(curent):
@@ -38,9 +38,10 @@ def corecting_curent_post(curent):
     """
     size_post = len(Post.objects.select('id').all())
     if curent <= 0 or curent > size_post // 6:
-        return [1,'class="this_list"']
-    ## Do not use else
-    return [curent,'class="this_list"']
+        return [1, 'class="this_list"']
+    # Do not use else
+    return [curent, 'class="this_list"']
+
 
 def number_list(curent):
     """
@@ -50,7 +51,7 @@ def number_list(curent):
     start, end = 0, 5
     while True:
         if start <= curent <= end:
-            return list(range(start+1,end+1))
+            return list(range(start+1, end+1))
         else:
             start, end = start+5, end+5
 
@@ -84,7 +85,7 @@ class WebServer(BaseHTTPRequestHandler):
                 blog_posts=post_list(list_curent, 6),
                 number_list=number_list(list_curent),
                 tmp_carent=list_curent,
-                curent=list_curent,this_list=corecting_curent_post(list_curent)[1])\
+                curent=list_curent, this_list=corecting_curent_post(list_curent)[1])\
                 .encode()
         self.send_response(200)
         self.end_headers()
@@ -109,6 +110,7 @@ class WebServer(BaseHTTPRequestHandler):
         if(email == 'posttest@gmail.com' and password == 'Qwerty+!'):
             return self.do_GET()
         return self.my404()
+
 
 httpd = HTTPServer(('127.0.0.1', 9000), WebServer)
 httpd.serve_forever()
