@@ -22,7 +22,7 @@ class Post(BaseModel):
         """
         id_photo = PhotoPost.objects.filters('post_id',self.id).get_date[0]
         self.photo = Photo.objects.filters(
-            'id',f'{id_photo.photo_id}').get_date[0]
+            'id',f'{id_photo.photo_id}').get_date[0].photo
         return self
         # PhotoPost
         # return PhotoPost.objects.filter(post_id=getattr(self, self.primary_key))
