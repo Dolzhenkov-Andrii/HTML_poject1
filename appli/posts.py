@@ -6,9 +6,9 @@ from flask import Blueprint
 from databases.models.post import Post
 posts = Blueprint('posts', __name__, template_folder='templates')
 
-@posts.route('/our_blogs')
-@posts.route('/our_blogs/<name>')
-def our_posts(name=1):
+@posts.route('/our_blogs', methods=['GET'])
+@posts.route('/our_blogs/<name>', methods=['GET'])
+def get_blogs(name=1):
     """
         Posts + Photo
     """
@@ -23,8 +23,8 @@ def our_posts(name=1):
     return posts_dict
 
 
-@posts.route('/post/<name>')
-def post(name):
+@posts.route('/post/<name>', methods=['GET'])
+def get_post(name):
     """
         User Post
     """
