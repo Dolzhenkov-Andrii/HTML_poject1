@@ -1,6 +1,5 @@
 #!/usr/bin/env fish
-set -xg DB_HOST "127.0.0.1"
+set -xg DB_HOST '127.0.0.1'
 set -xg DB_PASSWORD "Ujhs!!Gj04Rjktyj!((#"
 set -xg DB_USER "oscura"
-set -xg DB_NAME "my_blog"
-
+set -xg DB_NAME 'my_blog'
