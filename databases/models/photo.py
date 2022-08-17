@@ -25,3 +25,23 @@ class Photo(db.Model): # pylint: disable=too-few-public-methods
 
     # table_name = 'User_Photo'
     # manager_class = BaseManager
+#===============================================================
+# from sqlalchemy import Integer, Column, String, ForeignKey
+# from config.db import db
+
+# class Photo(db.Model):  # pylint: disable=too-few-public-methods
+#     """
+#         Photo model class
+#     """
+#     __tablename__ = "User_Photo"
+#     id = Column(Integer, primary_key=True)
+#     photo = Column(String(255))
+#     user_id = Column(Integer, ForeignKey("User.id"), nullable=False)
+
+#     def __repr__(self):
+#         return f'User_id {self.user_id} = Photo {self.photo}'
+
+#     # table_name = 'User_Photo'
+#     # manager_class = BaseManager
+
+

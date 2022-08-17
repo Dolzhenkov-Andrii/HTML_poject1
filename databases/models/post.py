@@ -1,75 +1,31 @@
 """
     Post module
 """
-from databases.managers.base import BaseManager
-from databases.models.base import BaseModel
-from databases.models.postphoto import PhotoPost
-from databases.models.photo import Photo
+
+from datetime import datetime
+from sqlalchemy import Integer, Column, String, Date, Text, ForeignKey
+from sqlalchemy.orm import relationship
+from config.db import db
 
 
-class Post(BaseModel):
+class Post(db.Model):  # pylint: disable=too-few-public-methods
     """
         Post model class
     """
-    table_name = 'Post'
-    manager_class = BaseManager
-    photo = None
-    id = None
+    __tablename__ = "Post"
+    id = Column(Integer, primary_key=True)
+    title = Column(String(100), nullable=True)
+    creation_date = Column(Date, default=datetime.utcnow, nullable=True)
+    text = Column(Text, nullable=False)
+    likes = Column(Integer, nullable=False)
+    view = Column(Integer, nullable=False)
+    shared = Column(Integer, nullable=False)
+    status_id = Column(Integer, ForeignKey('Post_Status.id'),
+                       nullable=False)
+    status = relationship('PostStatus')
+    category_id = Column(Integer, ForeignKey('Category.id'),
+                         nullable=False)
+    category = relationship('Category')
 
-    def photo_posts(self):
-        """
-            Getting many-to-many photos
-        """
-        id_photo = PhotoPost.objects.filters('post_id',self.id).get_date[0]
-        self.photo = Photo.objects.filters(
-            'id',f'{id_photo.photo_id}').get_date[0].photo
-        return self
-        # PhotoPost
-        # return PhotoPost.objects.filter(post_id=getattr(self, self.primary_key))
-
-
-    # def prefetch():
-    #     # JOIN
-    #     pass
-
-
-
-# class PhotoPost:
-#     post = ForeignKey(Post, 'post_id', 'id')
-#     photo = ForeignKey(Photo, 'post_id', 'id')
-
-#     @property
-#     def post(cls):
-#         return Post
-
-#     @property
-#     def photo(cls):
-#         return Photo.objects.get(id=self.photo_id)
-
-
-
-## select ->
-    # 1. all
-    # 2. first
-    # 3. last
-# 4. limit
-# 5. offset
-
-# Post.objects.prefetch('photo_posts').photo_posts.prefetch('photo').first().photo
-
-## filter -> sql WHERE
-
-# Post.objects.first().photo_posts().first().photo -> Manager -> all, first, last -> filter
-
-
-
-
-# Post.objects.where(id=10).photos().values('photo')
-# PhotoPost.objects.all() -> # SELECT * FROM photo_post -> [PhotoPost, PhotoPost]
-# PhotoPost.objects.all().values('photo') -> # [Photo, Photo]
-# PhotoPost.objects.all().values('post') -> # [Post, Post]
-
-
-# photo_post = PhotoPost.objects.first()
-# post = photo_post.post -> Post
-# photo = photo_post.photo -> Photo
+    def __repr__(self):
+        return f'Post {self.id}'
