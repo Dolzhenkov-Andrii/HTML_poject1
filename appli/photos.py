@@ -17,10 +17,11 @@ def get_photo(name):
     """
         User Post
     """
+
     print('='*20)
-    print('FALSE Photo = ', Photo)
+    print('@photos.route = ', Photo)
     print('='*20)
-    test = Photo.qeury.all()
+    test = Photo.query.all()
     # test = Photo
-    print(f'{name} = ',test)
-    return test
+    print(f'{test}')
+    return {f'test {name}' : f'{test[int(name)-1].photo}'}
