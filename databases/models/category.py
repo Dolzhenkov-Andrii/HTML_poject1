@@ -11,7 +11,7 @@ class Category(db.Model):  # pylint: disable=too-few-public-methods
     """
     __tablename__ = "Category"
     id = Column(Integer, primary_key=True)
-    name = Column(String(255),nullable=False)
+    name = Column(String(255))
 
     def __repr__(self):
         return f'Category {self.name}'
