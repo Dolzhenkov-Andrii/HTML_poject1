@@ -3,8 +3,9 @@
 """
 
 from datetime import datetime
+from sqlalchemy.orm import relationship
 from sqlalchemy import Integer, Column, String, Date, Text, ForeignKey
-# from sqlalchemy.orm import relationship
+from databases.models.user import User
 from config.db import db
 
 
@@ -26,6 +27,22 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     category_id = Column(Integer, ForeignKey('Category.id'),
                          nullable=False)
     # category = relationship('Category')
+    user_id = Column(Integer, ForeignKey('User.id'))
+    user = relationship(User)
+
+    def getJSON(self):
+        return {
+            'id':self.id,
+            'title':self.title,
+            'creation_date':self.creation_date,
+            'text':self.text,
+            'likes':self.likes,
+            'view':self.view,
+            'shared':self.shared,
+            'status_id':self.status_id,
+            'category_id':self.category_id,
+            'owner':self.user.getJSON(),
+        }
 
     def __repr__(self):
         return f'Post {self.id}'

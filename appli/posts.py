@@ -3,12 +3,15 @@
 """
 
 
+
 from flask import Blueprint
 from databases.models.post import Post
+# from databases.models.photo import Photo
+# from databases.models.photoPost import PhotoPost
+# from databases.models.postStatus import PostStatus
 
 posts = Blueprint('posts', __name__, template_folder='templates')
 
-# test = Photo.query.all()
 
 
 @posts.route('/posts/<name>', methods=['GET'])
@@ -16,8 +19,9 @@ def get_photo(name):
     """
         User Post
     """
-    test = Post.query.all()
-    return {f'Post{name}': f'{test[int(name)-1].title}'}
+    allpost = Post.query.all()
+
+    return {post.id:post.getJSON() for post in allpost }
 
 
 # """

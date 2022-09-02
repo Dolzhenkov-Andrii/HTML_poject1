@@ -15,4 +15,5 @@ def get_photo(name):
         User
     """
     test = User.query.all()
+
     return {f'test{name}': f'{test[int(name)-1].username}'}
