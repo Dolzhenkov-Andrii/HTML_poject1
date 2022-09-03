@@ -28,7 +28,7 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
                          nullable=False)
     # category = relationship('Category')
     user_id = Column(Integer, ForeignKey('User.id'))
-    user = relationship(User)
+    user = relationship(User, backref='posts', lazy=True)
 
     def getJSON(self):
         return {
