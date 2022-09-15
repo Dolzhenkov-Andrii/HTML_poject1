@@ -1,13 +1,25 @@
+"""
+    Decorators
+"""
+from flask import request
+from config.config import SECRET_KEY
+from databases.managers.token_hendler import valid_token
+# from databases.managers.token_hendler import TokenManager
 
-import urllib
+def token_required(func):
+    """Token_required
 
-def validator_decorator(func):
-    def validator(self):
-        post_data = urllib.parse.parse_qs(self.rfile.read(int(self.headers['Content-Length'])).decode())
-        if 'email' not in post_data or 'password' not in post_data:
-            file_to_open = open('400.html', 'rb').read()
-            self.send_response(400)
-            self.end_headers()
-            self.wfile.write(file_to_open)
-        func(self, post_data)
-    return validator
+    Args:
+        func (@app.route): Checks for tokens and their renewal
+    """
+    def decorated(*args, **kwargs):
+        try:
+            if 'Access-Token' in dict(request.headers):
+                if valid_token(SECRET_KEY, request.headers['access_token']) is False:
+                    return {'code': 17010, 'message': 'Error: Signature has expired'}
+            return func(*args, **kwargs)
+        except TypeError: # <- Не знаю какой ставить...
+            return func(*args, {'kwargs':kwargs,
+                                'code': 17012,
+                                'message': 'Error: Valid token'})
+    return decorated
