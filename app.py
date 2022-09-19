@@ -7,7 +7,7 @@ from flask import Flask
 from flask_cors import CORS
 # , cross_origin
 
-from appli import posts, users, photos, authorization
+from routs import posts, users, photos, authorization
 from config.db import DB_URI, db
 
 app = Flask(__name__)

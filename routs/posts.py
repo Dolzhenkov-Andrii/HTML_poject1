@@ -15,7 +15,7 @@ posts = Blueprint('posts', __name__, template_folder='templates')
 
 @posts.route('/posts/<name>', methods=['GET'])
 @token_required
-def get_photo(name):
+def get_posts(name):
     """
         User Post
     """
