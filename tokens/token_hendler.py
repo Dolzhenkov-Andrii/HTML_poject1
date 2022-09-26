@@ -3,7 +3,9 @@
 """
 from datetime import datetime, timedelta
 import jwt
-from exceptionsAPI.exceptionsAPI import DecodeToken
+from flask_api import status
+from exceptions.token import DecodeToken
+
 
 class TokenManager:
     """TokenManager
@@ -28,27 +30,27 @@ class TokenManager:
             }, key, algoritm)
             return token
         except jwt.PyJWTError:
-            return DecodeToken.message, DecodeToken.code
+            return DecodeToken.message, status.HTTP_400_BAD_REQUEST
 
     @classmethod
     def valid(cls, key, token, algoritm='HS256'):
-        """Valid token
+        """Validate token
 
         Args:
-            key (str): secret key for token decode
+            key (str): secret key for token
             token (str): token
             algoritm (str): encryption algorithm. Defaults to 'HS256'.
 
-        Returns:
-            bool: Token expiration date (True or False)
-        """
-        try:
-            if key is None or token is None:
-                return False
+        Raises:
+            DecodeToken: if key is None or token is None
+            DecodeToken: if token life is end
 
-            token_data = jwt.decode(token, key, algorithms=[algoritm])
-            if datetime.fromisoformat(token_data['expiration']) < datetime.utcnow():
-                return False
-            return True
-        except jwt.PyJWTError:
-            return DecodeToken.message, DecodeToken.code
+        Returns:
+            bool: True - if token life
+        """
+        if key is None or token is None:
+            raise DecodeToken
+        token_data = jwt.decode(token, key, algorithms=[algoritm])
+        if datetime.fromisoformat(token_data['expiration']) < datetime.utcnow():
+            raise DecodeToken
+        return True

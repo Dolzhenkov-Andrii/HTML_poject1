@@ -1,7 +1,7 @@
 """
     JSON manager
 """
-from exceptionsAPI.exceptionsAPI import InvalidKey
+from exceptions.validate import InvalidKey
 
 def request_data(json_data, value):
     """Key verification
@@ -17,11 +17,7 @@ def request_data(json_data, value):
     Returns:
         str: dictionary data by key
     """
-    try:
-        if json_data:
-            if json_data[value]:
-                return json_data[value]
-            raise InvalidKey
-        raise InvalidKey
-    except InvalidKey as error:
-        return error
+    if json_data:
+        if json_data[value]:
+            return json_data[value]
+    raise InvalidKey

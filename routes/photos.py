@@ -4,7 +4,7 @@
 from flask import jsonify
 from flask import Blueprint
 from databases.models.photo import Photo
-from decorators import token_required
+from decorators.token import token_required
 photos = Blueprint('photos', __name__, template_folder='templates')
 
 # test = Photo.query.all()
@@ -18,4 +18,3 @@ def get_photo(name):
     """
     test = Photo.query.all()
     return jsonify(test[int(name)-1])
-    # return {f'test -> {ACCESS_TOKEN_TIME}': f'{jsonify(test)}'}
