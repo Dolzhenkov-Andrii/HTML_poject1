@@ -3,7 +3,7 @@
 """
 from exceptions.validate import InvalidKey
 
-def request_data(json_data, value):
+def valid_key(json_data, value):
     """Key verification
 
     Args:
@@ -17,7 +17,6 @@ def request_data(json_data, value):
     Returns:
         str: dictionary data by key
     """
-    if json_data:
-        if json_data[value]:
-            return json_data[value]
+    if json_data and json_data[value]:
+        return json_data[value]
     raise InvalidKey

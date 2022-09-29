@@ -4,8 +4,9 @@
 from datetime import datetime, timedelta
 import jwt
 from flask_api import status
+from validations.json_valid import valid_key
 from exceptions.token import DecodeToken
-
+from exceptions.validate import InvalidKey
 
 class TokenManager:
     """TokenManager
@@ -25,7 +26,7 @@ class TokenManager:
         """
         try:
             token = jwt.encode({
-                'user': data,
+                'data': data,
                 'expiration': str(datetime.utcnow() + timedelta(seconds=int(time)))
             }, key, algoritm)
             return token
@@ -54,3 +55,28 @@ class TokenManager:
         if datetime.fromisoformat(token_data['expiration']) < datetime.utcnow():
             raise DecodeToken
         return True
+
+    @classmethod
+    def token_data(cls, key, token, algoritm='HS256'):
+        """remembers user
+
+        Args:
+            key (str): secret key for token
+            token (str): token
+            algoritm (str): encryption algorithm. Defaults to 'HS256'.
+
+        Raises:
+            DecodeToken: if key is None or token is None
+            DecodeToken: if token life is end
+
+        Returns:
+            bool: True - if token life
+        """
+        if key is None or token is None:
+            raise DecodeToken
+        token_data = jwt.decode(token, key, algorithms=[algoritm])
+        try:
+            return {'user_id': valid_key(token_data, 'user_id'),
+                    'remember': valid_key(token_data, 'remember'),}
+        except InvalidKey as error:
+            return error.message, status.HTTP_400_BAD_REQUEST

@@ -6,6 +6,8 @@ from datetime import date, datetime
 from sqlalchemy.orm import relationship
 from sqlalchemy import Integer, Column, String, Date, Text, ForeignKey
 from databases.models.user import User
+from databases.models.photoPost import link_photo_post
+from databases.models.photo import Photo
 from config.db import db
 
 @dataclass
@@ -21,6 +23,7 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     view: int
     shared: int
     user: User
+    photos: str
 
     __tablename__ = "Post"
 
@@ -39,6 +42,7 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     # category = relationship('Category')
     user_id = Column(Integer, ForeignKey('User.id'))
     user = relationship(User, backref='posts', lazy=True)
+    photos = relationship(Photo, secondary=link_photo_post)
 
     def __repr__(self):
         return f'Post {self.id}'

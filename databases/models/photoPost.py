@@ -1,17 +1,10 @@
 """
-    Photo_Post module
+    Photo_Post association table
 """
-from sqlalchemy import Integer,Column, ForeignKey
+
+from sqlalchemy import Integer,Column, ForeignKey, Table
 from config.db import db
 
-class PhotoPost(db.Model): # pylint: disable=too-few-public-methods
-    """
-        Photo_Post model class
-    """
-    __tablename__ = "Photo_Post"
-    id = Column(Integer, primary_key=True)
-    post_id = Column(Integer, ForeignKey("Post.id"))
-    photo_id = Column(Integer, ForeignKey("User_Photo.id"))
-
-    def __repr__(self):
-        return f'User {self.id}'
+link_photo_post = Table('Photo_Post', db.metadata,
+                         Column('post_id', Integer, ForeignKey('Post.id'), nullable=False),
+                         Column('photo_id', Integer, ForeignKey('User_Photo.id'), nullable=False))

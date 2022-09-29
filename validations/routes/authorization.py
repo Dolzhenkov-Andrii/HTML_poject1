@@ -10,6 +10,7 @@ class Authorization:
     validate_fields = {
         'username': str,
         'password': str,
+        'remember_me': bool,
     }
 
     def __init__(self, **request_data):

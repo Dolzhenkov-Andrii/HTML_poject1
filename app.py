@@ -20,5 +20,6 @@ app.register_blueprint(users.users, url_prefix='/api/')
 app.register_blueprint(photos.photos, url_prefix='/api/')
 app.register_blueprint(authorization.author, url_prefix='/api/')
 
+
 if __name__ == "__main__":
     app.run('127.0.0.1', 5050, debug=True)

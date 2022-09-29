@@ -10,7 +10,7 @@ users = Blueprint('users', __name__, template_folder='templates')
 
 
 @users.route('/user/<name>', methods=['GET'])
-def get_photo(name):
+def get_user(name):
     """
         User
     """

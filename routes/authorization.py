@@ -8,9 +8,9 @@ from exceptions.token import InvalidToken, MissingToken, DecodeToken
 from exceptions.validate import InvalidAuthorisation
 from databases.models.user import User
 from tokens.token_hendler import TokenManager
-from validations.validations import Authorization
-
-from config.config import SECRET_KEY, ACCESS_TOKEN_TIME, REFRESH_TOKEN_TIME
+from validations.routes.authorization import Authorization
+from config.config import ACCESS_TOKEN_TIME, REFRESH_TOKEN_TIME, REFRESH_REMEMBER_TOKEN_TIME
+from config.config import SECRET_KEY
 
 author = Blueprint('author', __name__, template_folder='templates')
 
@@ -23,14 +23,25 @@ def refresh_token():
         json: new tokens
     """
     try:
-        if 'Refresh-Token' in dict(request.headers):
-            if TokenManager.valid(SECRET_KEY, request.headers['refresh_token']):
-                #Поміркувати що замість ID_USER передавати
-                access = TokenManager.create(SECRET_KEY, ACCESS_TOKEN_TIME, 'ID_USER')
-                refresh = TokenManager.create(SECRET_KEY, REFRESH_TOKEN_TIME, 'ID_USER')
-                return {'access_token': access, 'refresh_token': refresh}, status.HTTP_200_OK
-            return InvalidToken.message, status.HTTP_400_BAD_REQUEST
-        return MissingToken.message, status.HTTP_400_BAD_REQUEST
+        if ('Refresh-Token' in dict(request.headers)
+            and TokenManager.valid(SECRET_KEY,
+                                   request.headers['refresh_token'])):
+
+            remember = TokenManager.token_data(
+                SECRET_KEY, request.headers['refresh_token'])
+
+            token_time = REFRESH_TOKEN_TIME
+            if remember['remember']:
+                token_time = REFRESH_REMEMBER_TOKEN_TIME
+
+            access = TokenManager.create(
+                SECRET_KEY, ACCESS_TOKEN_TIME, remember['user_id'])
+            refresh = TokenManager.create(
+                SECRET_KEY, token_time, remember)
+
+            return {'access_token': access, 'refresh_token': refresh}, status.HTTP_200_OK
+
+        return InvalidToken.message, status.HTTP_400_BAD_REQUEST
     except DecodeToken as error:
         return error.message, status.HTTP_400_BAD_REQUEST
 
@@ -47,18 +58,27 @@ def authorization():
         return error.message, status.HTTP_400_BAD_REQUEST
 
     try:
-        user = User.query.filter_by(username=f"{validated_data['username']}").first()
+        user = User.query.filter_by(
+            username=f"{validated_data['username']}").first()
         hash_key = pbkdf2_hmac('sha256',
-                                validated_data['password'].encode('utf-8'),
-                                b'YtnCjkbD#$%Cfkfnf['*2,
-                                100000)
+                               validated_data['password'].encode('utf-8'),
+                               b'YtnCjkbD#$%Cfkfnf['*2,
+                               100000)
         if user is None or (user.pasword == hash_key.hex()) is False:
             return InvalidAuthorisation.message, status.HTTP_400_BAD_REQUEST
 
-        access = TokenManager.create(SECRET_KEY, ACCESS_TOKEN_TIME, 'ID_USER')
-        refresh = TokenManager.create(SECRET_KEY, REFRESH_TOKEN_TIME, 'ID_USER')
+        token_time = REFRESH_TOKEN_TIME
+        if validated_data['remember_me']:
+            token_time = REFRESH_REMEMBER_TOKEN_TIME
+
+        access = TokenManager.create(
+            SECRET_KEY, ACCESS_TOKEN_TIME, user.id)
+        refresh = TokenManager.create(SECRET_KEY, token_time, {'user_id': user.id,
+                                      'remember': validated_data['remember_me']})
+
         return {'access_token': access,
                 'refresh_token': refresh,
                 'user': user}, status.HTTP_200_OK
+
     except DecodeToken as error:
         return error.message, status.HTTP_400_BAD_REQUEST
