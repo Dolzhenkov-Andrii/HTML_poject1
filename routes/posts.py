@@ -1,6 +1,6 @@
 """
     Posts routes
-        /posts (args: limit, start)
+        /posts (args: position, amount)
         /posts/amount
         /post (args: id)
 """
@@ -17,19 +17,23 @@ posts = Blueprint('posts', __name__, template_folder='templates')
 @token_required
 def get_posts():
     """Posts slize
-        ?limit=0&start=0
-        imit=how many posts (int > 0)
-        start=from what position (int > 0)
+        ?amount=0&amount=0
+        amount=how many posts (int > 0)
+        position=from what position (int > 0)
     """
-    start = request.args.get('start', default=0, type=int)
-    limit = request.args.get('limit', default=8, type=int)
+    my_cooki = request.cookies.get('access_token', None)
+    my_user = request.cookies.get('Name', None)
 
-    if start < 0 or limit < 0:
-        start, limit = 0, 8
+    position = request.args.get('position', default=0, type=int)
+    amount = request.args.get('amount', default=6, type=int)
+
+    if position < 0 or amount < 0:
+        position, amount = 0, 8
 
     slice_posts = Post.query.order_by(
-        Post.id.desc()).offset(start).limit(limit).all()
-    return {'posts': slice_posts, }, status.HTTP_200_OK
+        Post.id.desc()).offset(position).limit(amount).all()
+    return {'posts': slice_posts,
+            'my_cooki':{'my_access':my_cooki, 'my_user':my_user,}},status.HTTP_200_OK
 
 
 @posts.route('/posts_amount', endpoint='get_amount_posts', methods=['GET'])

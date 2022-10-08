@@ -72,13 +72,13 @@ def authorization():
             token_time = REFRESH_REMEMBER_TOKEN_TIME
 
         access = TokenManager.create(
-            SECRET_KEY, ACCESS_TOKEN_TIME, user.id)
+            SECRET_KEY, ACCESS_TOKEN_TIME, {'user_id': user.id,})
         refresh = TokenManager.create(SECRET_KEY, token_time, {'user_id': user.id,
                                       'remember': validated_data['remember_me']})
 
         return {'access_token': access,
                 'refresh_token': refresh,
-                'user': user}, status.HTTP_200_OK
+                'user': user,}, status.HTTP_200_OK
 
     except DecodeToken as error:
         return error.message, status.HTTP_400_BAD_REQUEST

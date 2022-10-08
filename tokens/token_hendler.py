@@ -27,7 +27,7 @@ class TokenManager:
         try:
             token = jwt.encode({
                 'data': data,
-                'expiration': str(datetime.utcnow() + timedelta(seconds=int(time)))
+                'expiration': str(datetime.now() + timedelta(seconds=int(time)))
             }, key, algoritm)
             return token
         except jwt.PyJWTError:
@@ -52,7 +52,7 @@ class TokenManager:
         if key is None or token is None:
             raise DecodeToken
         token_data = jwt.decode(token, key, algorithms=[algoritm])
-        if datetime.fromisoformat(token_data['expiration']) < datetime.utcnow():
+        if datetime.fromisoformat(token_data['expiration']) < datetime.now():
             raise DecodeToken
         return True
 
@@ -76,7 +76,7 @@ class TokenManager:
             raise DecodeToken
         token_data = jwt.decode(token, key, algorithms=[algoritm])
         try:
-            return {'user_id': valid_key(token_data, 'user_id'),
-                    'remember': valid_key(token_data, 'remember'),}
+            return {'user_id': valid_key(token_data['data'], 'user_id'),
+                    'remember': valid_key(token_data['data'], 'remember'),}
         except InvalidKey as error:
             return error.message, status.HTTP_400_BAD_REQUEST

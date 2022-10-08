@@ -17,6 +17,8 @@ def valid_key(json_data, value):
     Returns:
         str: dictionary data by key
     """
-    if json_data and json_data[value]:
-        return json_data[value]
+    if json_data:
+        if json_data[value]:
+            return json_data[value]
+        return False
     raise InvalidKey

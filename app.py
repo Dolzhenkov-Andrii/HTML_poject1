@@ -7,6 +7,7 @@ from flask_cors import CORS
 
 from routes import posts, users, photos, authorization
 from config.db import DB_URI, db
+# from config.config import APP_PORT, APP_HOST
 
 
 app = Flask(__name__)

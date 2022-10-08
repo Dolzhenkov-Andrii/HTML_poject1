@@ -20,6 +20,6 @@ def token_required(func):
                 TokenManager.valid(SECRET_KEY, request.headers['Access-Token'])
                 return func(*args, **kwargs)
             except DecodeToken:
-                return InvalidToken.message, status.HTTP_400_BAD_REQUEST
-        return InvalidToken.message, status.HTTP_400_BAD_REQUEST
+                return InvalidToken.message, status.HTTP_401_UNAUTHORIZED
+        return InvalidToken.message, status.HTTP_401_UNAUTHORIZED
     return decorated
