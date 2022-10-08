@@ -17,7 +17,7 @@ posts = Blueprint('posts', __name__, template_folder='templates')
 @token_required
 def get_posts():
     """Posts slize
-        ?amount=0&amount=0
+        ?position=0&amount=0
         amount=how many posts (int > 0)
         position=from what position (int > 0)
     """
@@ -28,7 +28,7 @@ def get_posts():
     amount = request.args.get('amount', default=6, type=int)
 
     if position < 0 or amount < 0:
-        position, amount = 0, 8
+        position, amount = 0, 6
 
     slice_posts = Post.query.order_by(
         Post.id.desc()).offset(position).limit(amount).all()
@@ -52,7 +52,7 @@ def get_post():
     """
     post_id = request.args.get('id', default=None, type=int)
 
-    if post_id < 0:
+    if post_id is None or post_id < 0:
         post_id = None
 
     post = Post.query.filter_by(id=post_id).first()

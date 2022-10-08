@@ -8,7 +8,7 @@ from exceptions.token import InvalidToken, MissingToken, DecodeToken
 from exceptions.validate import InvalidAuthorisation
 from databases.models.user import User
 from tokens.token_hendler import TokenManager
-from validations.routes.authorization import Authorization
+from validations.routes.authorization import Authorization, ErrorAuthorisation
 from config.config import ACCESS_TOKEN_TIME, REFRESH_TOKEN_TIME, REFRESH_REMEMBER_TOKEN_TIME
 from config.config import SECRET_KEY
 
@@ -54,7 +54,7 @@ def authorization():
     try:
         sing_in = Authorization(**request.get_json())
         validated_data = sing_in.validate()
-    except MissingToken as error:
+    except ErrorAuthorisation as error:
         return error.message, status.HTTP_400_BAD_REQUEST
 
     try:
@@ -65,7 +65,7 @@ def authorization():
                                b'YtnCjkbD#$%Cfkfnf['*2,
                                100000)
         if user is None or (user.pasword == hash_key.hex()) is False:
-            return InvalidAuthorisation.message, status.HTTP_400_BAD_REQUEST
+            return InvalidAuthorisation.message, status.HTTP_401_UNAUTHORIZED
 
         token_time = REFRESH_TOKEN_TIME
         if validated_data['remember_me']:
