@@ -1,23 +1,34 @@
 """Base class for Test"""
-import unittest
-import requests
-from tokens.token_hendler import TokenManager
-from config.config import ACCESS_TOKEN_TIME, REFRESH_REMEMBER_TOKEN_TIME
-from config.config import SECRET_KEY
+from unittest import TestCase
+from app import app, db
+from config.db import DB_TEST_URI
 
 
-class BaseAPItest(unittest.TestCase):
-    """Base class for Test"""
-    route_name = ''
-    def __init__(self, methodName: str = ...) -> None:
-        super().__init__(methodName)
-        self.base_url = f'http://127.0.0.1:5050/api/{self.route_name}'
-        self.access_token = TokenManager.create(
-            SECRET_KEY, ACCESS_TOKEN_TIME, {'user_id': 1, })
-        self.refresh_token = TokenManager.create(SECRET_KEY, REFRESH_REMEMBER_TOKEN_TIME, {
-            'user_id': 1, 'remember': True})
+class BaseAPItest(TestCase):
+    """Parent class for tests"""
 
-    def test_not_404(self):
-        """Route exists"""
-        resp = requests.get(self.base_url)
-        self.assertNotEqual(resp.status_code, 404)
+    def setUp(self):
+        """
+            setUp(self) - In each test, creates a test application
+            and database based on an existing SQLAlchemy models.
+        """
+        self.app = app
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = DB_TEST_URI
+        self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        self.app.config['TESTING'] = True
+        db.init_app(self.app)
+        self.client = self.app.test_client()
+        self._ctx = self.app.test_request_context()
+        self._ctx.push()
+        db.create_all()
+        self.test_db = db
+
+    def tearDown(self):
+        """
+            tearDown(self) - Closes everything and removes
+            the database after testing the test
+        """
+        db.session.remove()
+        db.drop_all()
+        db.get_engine(self.app).dispose()
+        self._ctx.pop()

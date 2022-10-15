@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import jwt
 from flask_api import status
 from validations.json_valid import valid_key
-from exceptions.token import DecodeToken
+from exceptions.token import DecodeToken, MissingToken, ExpirationToken, InvalidToken
 from exceptions.validate import InvalidKey
 
 class TokenManager:
@@ -50,10 +50,14 @@ class TokenManager:
             bool: True - if token life
         """
         if key is None or token is None:
-            raise DecodeToken
-        token_data = jwt.decode(token, key, algorithms=[algoritm])
+            raise MissingToken
+        try:
+            token_data = jwt.decode(token, key, algorithms=[algoritm])
+        except Exception as error:
+            raise InvalidToken from error
+
         if datetime.fromisoformat(token_data['expiration']) < datetime.now():
-            raise DecodeToken
+            raise ExpirationToken
         return True
 
     @classmethod

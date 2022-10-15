@@ -9,12 +9,17 @@ class DecodeToken(APIexception):
     """
     message = 'Request failed due to token error'
 
-class InvalidToken(APIexception):
+class ExpirationToken(DecodeToken):
     """Invalid Token Error
     """
     message = 'Request failed due to expiration'
 
-class MissingToken(APIexception):
+class InvalidToken(DecodeToken):
+    """Invalid Token Error
+    """
+    message = 'Request failed due to token error'
+
+class MissingToken(DecodeToken):
     """Missing Token
     """
     message = 'Request failed due to missing token'

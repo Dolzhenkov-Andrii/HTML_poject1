@@ -28,17 +28,17 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     # pasword: str
 
     id = Column(Integer, primary_key=True)
-    username = Column(String(255), unique=True)
-    pasword = Column(String(255))
-    email = Column(String(255), unique=True)
-    surname = Column(String(255))
-    name = Column(String(255))
-    birthday = Column(Date)
-    phone = Column(String(255))
-    status_id = Column(Integer, ForeignKey('User_Status.id'), nullable=False)
+    username = Column(String(255), unique=True, nullable=False)
+    pasword = Column(String(255), nullable=False)
+    email = Column(String(255), unique=True, nullable=False)
+    surname = Column(String(255), nullable=False)
+    name = Column(String(255), nullable=False)
+    birthday = Column(Date, nullable=False)
+    phone = Column(String(255), nullable=False)
+    status_id = Column(Integer, ForeignKey(UserStatus.id))
     status = relationship(UserStatus)
     social_media_id = Column(Integer, ForeignKey(
-        'Social_media.id'), nullable=False)
+        SocialMedia.id))
     soCmedia = relationship(SocialMedia)
 
     def __repr__(self):

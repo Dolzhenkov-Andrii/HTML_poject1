@@ -5,9 +5,9 @@
 from flask import Flask
 from flask_cors import CORS
 
-from routes import posts, users, photos, authorization
+from routes import posts, users, photos, authorization, tmp_status
 from config.db import DB_URI, db
-# from config.config import APP_PORT, APP_HOST
+from config.config import APP_PORT, APP_HOST
 
 
 app = Flask(__name__)
@@ -21,6 +21,9 @@ app.register_blueprint(users.users, url_prefix='/api/')
 app.register_blueprint(photos.photos, url_prefix='/api/')
 app.register_blueprint(authorization.author, url_prefix='/api/')
 
+# Test route
+app.register_blueprint(tmp_status.status, url_prefix='/api/')
+
 
 if __name__ == "__main__":
-    app.run('127.0.0.1', 5050, debug=True)
+    app.run(APP_HOST, APP_PORT, debug=True)

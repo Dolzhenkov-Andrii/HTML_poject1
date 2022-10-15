@@ -5,9 +5,11 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from sqlalchemy.orm import relationship
 from sqlalchemy import Integer, Column, String, Date, Text, ForeignKey
-from databases.models.user import User
 from databases.models.photoPost import link_photo_post
+from databases.models.user import User
 from databases.models.photo import Photo
+from databases.models.category import Category
+from databases.models.postStatus import PostStatus
 from config.db import db
 
 @dataclass
@@ -34,10 +36,10 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     likes = Column(Integer, nullable=False)
     view = Column(Integer, nullable=False)
     shared = Column(Integer, nullable=False)
-    status_id = Column(Integer, ForeignKey('Post_Status.id'),
+    status_id = Column(Integer, ForeignKey(PostStatus.id),
                        nullable=False)
     # status = relationship('PostStatus')
-    category_id = Column(Integer, ForeignKey('Category.id'),
+    category_id = Column(Integer, ForeignKey(Category.id),
                          nullable=False)
     # category = relationship('Category')
     user_id = Column(Integer, ForeignKey('User.id'))
