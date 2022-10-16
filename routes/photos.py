@@ -1,20 +1,27 @@
 """
-    Posts date
+    Photo routes:
+        /photo
 """
-from flask import jsonify
+
+from flask_api import status
+from flask import request
 from flask import Blueprint
 from databases.models.photo import Photo
 from decorators.token import token_required
 photos = Blueprint('photos', __name__, template_folder='templates')
 
-# test = Photo.query.all()
 
-
-@photos.route('/photos/<name>', methods=['GET'])
+@photos.route('/photo', endpoint='get_photo', methods=['GET'])
 @token_required
-def get_photo(name):
+def get_photo():
     """
-        User Post
+        Photo
+        ?id=Photo.id
     """
-    test = Photo.query.all()
-    return jsonify(test[int(name)-1])
+    photo_id = request.args.get('id', default=None, type=int)
+
+    if photo_id is None or photo_id < 0:
+        photo_id = None
+
+    photo = Photo.query.filter_by(id=photo_id).first()
+    return {'photo': photo, }, status.HTTP_200_OK

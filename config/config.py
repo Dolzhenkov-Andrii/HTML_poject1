@@ -17,7 +17,6 @@
     TEST_DB_NAME
     TEST_DB_URI
     TEST_USER_ID
-    TEST_STATUS_USER
     TEST_USER_PASSWORD
     TEST_USER_USERNAME
     TEST_USER_EMAIL
@@ -25,6 +24,8 @@
     TEST_USER_NAME
     TEST_USER_BIRTHDAY
     TEST_USER_PHONE
+    TEST_STATUS_USER
+    TEST_PHOTO_PHOTO
 """
 import os
 from datetime import date
@@ -63,3 +64,8 @@ TEST_USER_NAME = os.environ.get('TEST_USER_NAME', 'Name')
 TEST_USER_BIRTHDAY = os.environ.get('TEST_USER_PHONE', date.today())
 TEST_USER_PHONE = os.environ.get('TEST_USER_PHONE', '+380501234567')
 TEST_STATUS_USER = os.environ.get('TEST_STATUS_USER', 'user')
+TEST_STATUS_POST = os.environ.get('TEST_STATUS_USER', 'Active')
+TEST_PHOTO_PHOTO = os.environ.get('TEST_PHOTO_PHOTO', 'url/photo')
+TEST_POST_TITLE = os.environ.get('TEST_PHOTO_PHOTO', 'Test Posts')
+TEST_POST_TEXT = os.environ.get(
+    'TEST_POST_TEXT', "We check what works, otherwise what's the point of writing them.")

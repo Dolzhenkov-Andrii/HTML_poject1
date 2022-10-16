@@ -21,8 +21,6 @@ def get_posts():
         amount=how many posts (int > 0)
         position=from what position (int > 0)
     """
-    my_cooki = request.cookies.get('access_token', None)
-    my_user = request.cookies.get('Name', None)
 
     position = request.args.get('position', default=0, type=int)
     amount = request.args.get('amount', default=6, type=int)
@@ -32,8 +30,7 @@ def get_posts():
 
     slice_posts = Post.query.order_by(
         Post.id.desc()).offset(position).limit(amount).all()
-    return {'posts': slice_posts,
-            'my_cooki':{'my_access':my_cooki, 'my_user':my_user,}},status.HTTP_200_OK
+    return {'posts': slice_posts}, status.HTTP_200_OK
 
 
 @posts.route('/posts_amount', endpoint='get_amount_posts', methods=['GET'])

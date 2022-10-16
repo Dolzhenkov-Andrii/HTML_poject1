@@ -1,23 +1,15 @@
 """Test route authorization"""
 
-from hashlib import pbkdf2_hmac
-from tests.base_test_class import BaseAPItest
-from databases.models.user import User
-from databases.models.userStatus import UserStatus
+from tests.test_user import TestUser
 from exceptions.validate import InvalidAuthorisation, ErrorAuthorisation
 from config.config import (
     TEST_USER_USERNAME,
     TEST_USER_PASSWORD,
-    TEST_USER_SURNAME,
-    TEST_USER_NAME,
-    TEST_USER_EMAIL,
-    TEST_USER_BIRTHDAY,
-    TEST_USER_PHONE,
     TEST_STATUS_USER,
 )
 
 
-class AuthorizationTest(BaseAPItest):
+class AuthorizationTest(TestUser):
     """
         Authorization class test:
         1) successful authorization, without the mark "remember me"
@@ -28,30 +20,6 @@ class AuthorizationTest(BaseAPItest):
         6) lack of form
     """
     URL = '/api/authorization'
-
-    def setUp(self):
-        super().setUp()
-        # Status new user
-        user_status = UserStatus()
-        user_status.name = TEST_STATUS_USER
-        self.test_db.session.add(user_status)  # pylint: disable=no-member
-        self.test_db.session.commit()  # pylint: disable=no-member
-        # Test user
-        new_user = User()
-        pasword = pbkdf2_hmac('sha256',
-                              TEST_USER_PASSWORD.encode('utf-8'),
-                              b'YtnCjkbD#$%Cfkfnf['*2,
-                              100000)
-        new_user.pasword = pasword.hex()
-        new_user.username = TEST_USER_USERNAME
-        new_user.email = TEST_USER_EMAIL
-        new_user.surname = TEST_USER_SURNAME
-        new_user.name = TEST_USER_NAME
-        new_user.birthday = TEST_USER_BIRTHDAY
-        new_user.phone = TEST_USER_PHONE
-        new_user.status_id = UserStatus.query.filter_by(name=TEST_STATUS_USER).first().id
-        self.test_db.session.add(new_user)  # pylint: disable=no-member
-        self.test_db.session.commit()  # pylint: disable=no-member
 
     def test_authorization(self):
         """

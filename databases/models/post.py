@@ -38,10 +38,8 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     shared = Column(Integer)
     status_id = Column(Integer, ForeignKey(PostStatus.id),
                        nullable=False)
-    # status = relationship('PostStatus')
     category_id = Column(Integer, ForeignKey(Category.id))
-    # category = relationship('Category')
-    user_id = Column(Integer, ForeignKey('User.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey(User.id), nullable=False)
     user = relationship(User, backref='posts', lazy=True)
     photos = relationship(Photo, secondary=link_photo_post)
 
