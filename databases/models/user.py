@@ -25,6 +25,7 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     name: str
     birthday: date
     phone: str
+    status: str
     # pasword: str
 
     id = Column(Integer, primary_key=True)
@@ -35,7 +36,7 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     name = Column(String(255), nullable=False)
     birthday = Column(Date, nullable=False)
     phone = Column(String(255), nullable=False)
-    status_id = Column(Integer, ForeignKey(UserStatus.id))
+    status_id = Column(Integer, ForeignKey(UserStatus.id), nullable=False)
     status = relationship(UserStatus)
     social_media_id = Column(Integer, ForeignKey(
         SocialMedia.id))

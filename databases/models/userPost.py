@@ -10,8 +10,8 @@ class UserPost(db.Model): # pylint: disable=too-few-public-methods
     """
     __tablename__ = "User_Post"
     id = Column(Integer, primary_key=True)
-    post_id = Column(Integer, ForeignKey("Post.id"))
-    user_id = Column(Integer, ForeignKey("User.id"))
+    post_id = Column(Integer, ForeignKey("Post.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("User.id"), nullable=False)
 
     def __repr__(self):
         return f'User {self.id}'

@@ -20,8 +20,8 @@ class Photo(db.Model):  # pylint: disable=too-few-public-methods
     __tablename__ = "User_Photo"
 
     id = Column(Integer, primary_key=True)
-    photo = Column(String(255))
-    user_id = Column(Integer, ForeignKey("User.id"))
+    photo = Column(String(255), nullable=False)
+    user_id = Column(Integer, ForeignKey("User.id"), nullable=False)
 
     # users = relationship(
     #     User, back_populates='photos', cascade='all'

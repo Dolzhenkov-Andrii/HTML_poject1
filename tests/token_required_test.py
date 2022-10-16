@@ -3,8 +3,7 @@ import time
 from tests.base_test_class import BaseAPItest
 from databases.models.userStatus import UserStatus
 from tokens.token_hendler import TokenManager
-from config.config import ACCESS_TOKEN_TIME
-from config.config import SECRET_KEY
+from config.config import ACCESS_TOKEN_TIME, SECRET_KEY, TEST_STATUS_USER
 from exceptions.token import MissingToken, ExpirationToken, InvalidToken
 
 
@@ -20,7 +19,7 @@ class TokenRequiredTest(BaseAPItest):
     def setUp(self):
         super().setUp()
         status = UserStatus()
-        status.name = 'TetsRoute'
+        status.name = TEST_STATUS_USER
         self.test_db.session.add(status) # pylint: disable=no-member
         self.test_db.session.commit() # pylint: disable=no-member
 
@@ -35,7 +34,7 @@ class TokenRequiredTest(BaseAPItest):
         self.assertEqual(resp.status_code, 200)
         data = resp.get_json()
         self.assertIn('name', data)
-        self.assertEqual(data['name'], 'TetsRoute')
+        self.assertEqual(data['name'], TEST_STATUS_USER)
 
     def test_expired_token(self):
         """

@@ -1,7 +1,7 @@
 """Base class for Test"""
 from unittest import TestCase
 from app import app, db
-from config.db import DB_TEST_URI
+from config.config import TEST_DB_URI
 
 
 class BaseAPItest(TestCase):
@@ -13,7 +13,7 @@ class BaseAPItest(TestCase):
             and database based on an existing SQLAlchemy models.
         """
         self.app = app
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = DB_TEST_URI
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = TEST_DB_URI
         self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         self.app.config['TESTING'] = True
         db.init_app(self.app)

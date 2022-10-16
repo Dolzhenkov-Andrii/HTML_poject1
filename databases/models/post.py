@@ -30,19 +30,18 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     __tablename__ = "Post"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String(100))
-    creation_date = Column(Date, default=datetime.utcnow)
+    title = Column(String(100), nullable=False)
+    creation_date = Column(Date, nullable=False, default=datetime.utcnow)
     text = Column(Text, nullable=False)
-    likes = Column(Integer, nullable=False)
-    view = Column(Integer, nullable=False)
-    shared = Column(Integer, nullable=False)
+    likes = Column(Integer)
+    view = Column(Integer)
+    shared = Column(Integer)
     status_id = Column(Integer, ForeignKey(PostStatus.id),
                        nullable=False)
     # status = relationship('PostStatus')
-    category_id = Column(Integer, ForeignKey(Category.id),
-                         nullable=False)
+    category_id = Column(Integer, ForeignKey(Category.id))
     # category = relationship('Category')
-    user_id = Column(Integer, ForeignKey('User.id'))
+    user_id = Column(Integer, ForeignKey('User.id'), nullable=False)
     user = relationship(User, backref='posts', lazy=True)
     photos = relationship(Photo, secondary=link_photo_post)
 
