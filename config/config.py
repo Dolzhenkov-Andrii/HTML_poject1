@@ -10,7 +10,8 @@
     ACCESS_TOKEN_TIME
     REFRESH_TOKEN_TIME
     REFRESH_REMEMBER_TOKEN_TIME
-
+    BASE_POSITION_POSTS
+    BASE_COUNT_POSTS
 
     TEST_DB_PASSWORD
     TEST_DB_USER
@@ -26,6 +27,9 @@
     TEST_USER_PHONE
     TEST_STATUS_USER
     TEST_PHOTO_PHOTO
+    TEST_POST_TITLE
+    TEST_POST_TEXT
+    TEST_POST_COUNT
 """
 import os
 from datetime import date
@@ -46,6 +50,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', "cfb1ebd916608f13e6d08cad30521dcc")
 ACCESS_TOKEN_TIME = '15'
 REFRESH_TOKEN_TIME = '25'
 REFRESH_REMEMBER_TOKEN_TIME = '35'
+BASE_POSITION_POSTS = os.environ.get('BASE_POSITION_POSTS', 0)
+BASE_COUNT_POSTS = os.environ.get('BASE_COUNT_POSTS', 6)
 
 
 TEST_DB_PASSWORD = os.environ.get(
@@ -65,7 +71,8 @@ TEST_USER_BIRTHDAY = os.environ.get('TEST_USER_PHONE', date.today())
 TEST_USER_PHONE = os.environ.get('TEST_USER_PHONE', '+380501234567')
 TEST_STATUS_USER = os.environ.get('TEST_STATUS_USER', 'user')
 TEST_STATUS_POST = os.environ.get('TEST_STATUS_USER', 'Active')
-TEST_PHOTO_PHOTO = os.environ.get('TEST_PHOTO_PHOTO', 'url/photo')
+TEST_PHOTO_PHOTO = os.environ.get('TEST_PHOTO_PHOTO', 'number_')
 TEST_POST_TITLE = os.environ.get('TEST_PHOTO_PHOTO', 'Test Posts')
 TEST_POST_TEXT = os.environ.get(
     'TEST_POST_TEXT', "We check what works, otherwise what's the point of writing them.")
+TEST_POST_COUNT = os.environ.get('TEST_POST_COUNT', 6)

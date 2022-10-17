@@ -1,6 +1,7 @@
 """
     Post module
 """
+
 from dataclasses import dataclass
 from datetime import date, datetime
 from sqlalchemy.orm import relationship
@@ -21,11 +22,12 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     title: str
     creation_date: date
     text: str
+    status: str
     likes: int
     view: int
     shared: int
     user: User
-    photos: str
+    photos: Photo
 
     __tablename__ = "Post"
 
@@ -38,6 +40,7 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     shared = Column(Integer)
     status_id = Column(Integer, ForeignKey(PostStatus.id),
                        nullable=False)
+    status = relationship(PostStatus)
     category_id = Column(Integer, ForeignKey(Category.id))
     user_id = Column(Integer, ForeignKey(User.id), nullable=False)
     user = relationship(User, backref='posts', lazy=True)

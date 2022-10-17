@@ -2,20 +2,23 @@
 import unittest
 from HTMLTestRunner.runner import HTMLTestRunner
 
-from tests.author_test import AuthorizationTest
-from tests.refresh_token_test import RefreshTokenTest
-
-from tests.routes.posts.post_test import PostTest
-from tests.routes.posts.posts_test import PostsTest
+from tests.token_required_test import TokenRequiredTest
+from tests.routes.refresh_token_test import RefreshTokenTest
+from tests.routes.author_test import AuthorizationTest
+from tests.routes.photos.photo_test import PhotoTest
 from tests.routes.posts.posts_amount_test import PostsAmountTest
+from tests.routes.posts.posts_test import PostsTest
+from tests.routes.posts.post_test import PostTest
 
 
 suite = unittest.TestSuite([
-    unittest.TestLoader().loadTestsFromTestCase(AuthorizationTest),
+    unittest.TestLoader().loadTestsFromTestCase(TokenRequiredTest),
     unittest.TestLoader().loadTestsFromTestCase(RefreshTokenTest),
-    unittest.TestLoader().loadTestsFromTestCase(PostTest),
-    unittest.TestLoader().loadTestsFromTestCase(PostsTest),
+    unittest.TestLoader().loadTestsFromTestCase(AuthorizationTest),
+    unittest.TestLoader().loadTestsFromTestCase(PhotoTest),
     unittest.TestLoader().loadTestsFromTestCase(PostsAmountTest),
+    unittest.TestLoader().loadTestsFromTestCase(PostsTest),
+    unittest.TestLoader().loadTestsFromTestCase(PostTest),
 ])
 
 if __name__ == '__main__':
@@ -29,7 +32,7 @@ if __name__ == '__main__':
         open_in_browser=True,
         description="HTMLTestReport",
         tested_by="Dolzhenkov Andrii",
-        add_traceback=False
+        add_traceback=True
     )
 
     runner.run(suite)
