@@ -5,7 +5,7 @@ from hashlib import pbkdf2_hmac
 from flask_api import status
 from flask import Blueprint, request
 from exceptions.token import InvalidToken, DecodeToken, MissingToken, ExpirationToken
-from exceptions.validate import InvalidAuthorisation
+from exceptions.validate import InvalidAuthorisation, InvalidString
 from databases.models.user import User
 from tokens.token_hendler import TokenManager
 from validations.routes.authorization import Authorization, ErrorAuthorisation
@@ -58,6 +58,9 @@ def authorization():
         validated_data = sing_in.validate()
     except ErrorAuthorisation as error:
         return error.message, status.HTTP_400_BAD_REQUEST
+    except InvalidString as error:
+        return error.message, status.HTTP_400_BAD_REQUEST
+
     try:
         user = User.query.filter_by(
             username=f"{validated_data['username']}").first()
