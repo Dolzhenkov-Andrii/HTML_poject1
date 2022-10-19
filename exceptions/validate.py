@@ -1,6 +1,8 @@
 """_
     Classes for exceptions
 """
+from dateutil.parser._parser import ParserError
+from email_validator import EmailNotValidError
 from exceptions.basic import APIexception, InvalidString
 
 class InvalidKey(APIexception):
@@ -32,3 +34,13 @@ class InvalidCharactersInString(InvalidString):
     """invalid characters in string
     """
     message = 'Invalid characters in string'
+
+class InvalidEmail(EmailNotValidError):
+    """invalid email address
+    """
+    message = 'Wrong email address'
+
+class InvalidDate(ParserError):
+    """invalid date
+    """
+    message = 'Invalid date format'

@@ -26,6 +26,8 @@
     VALID_MAX_SIZE_SURNAME
     VALID_MIN_SIZE_PHONE
     VALID_MAX_SIZE_PHONE
+    VALID_NAME_CHARACTERS
+
 
     TEST_DB_PASSWORD
     TEST_DB_USER
@@ -46,7 +48,6 @@
     TEST_POST_COUNT
 """
 import os
-from datetime import date
 
 
 APP_HOST = os.environ.get('APP_HOST', '127.0.0.1')
@@ -68,6 +69,10 @@ REFRESH_REMEMBER_TOKEN_TIME = '35'
 BASE_POSITION_POSTS = os.environ.get('BASE_POSITION_POSTS', 0)
 BASE_COUNT_POSTS = os.environ.get('BASE_COUNT_POSTS', 6)
 
+# FORMAT_BIRTHDAY_DATE = os.environ.get('FORMAT_BIRTHDAY_DATE', '%Y-%m-%d')
+# FORMAT_POST_DATE = os.environ.get('FORMAT_POST_DATE', '%Y-%m-%d')
+
+#VALID VARIABLES
 VALID_MIN_SIZE_USERNAME = os.environ.get('VALID_MIN_SIZE_USERNAME', 6)
 VALID_MAX_SIZE_USERNAME = os.environ.get('VALID_MAX_SIZE_USERNAME', 30)
 VALID_MIN_SIZE_PASSWORD = os.environ.get('VALID_MIN_SIZE_PASSWORD', 8)
@@ -80,8 +85,14 @@ VALID_MIN_SIZE_SURNAME = os.environ.get('VALID_MIN_SIZE_SURNAME', 2)
 VALID_MAX_SIZE_SURNAME = os.environ.get('VALID_MAX_SIZE_SURNAME', 60)
 VALID_MIN_SIZE_PHONE = os.environ.get('VALID_MIN_SIZE_PHONE', 8)
 VALID_MAX_SIZE_PHONE = os.environ.get('VALID_MAX_SIZE_PHONE', 16)
+VALID_USERNAME_CHARACTERS = os.environ.get('VALID_NAME_CHARACTERS', "^[a-zA-Z0-9_-]+$")
+VALID_NAME_CHARACTERS = os.environ.get('VALID_NAME_CHARACTERS', "^[a-zA-Z-]+$")
+VALID_SURNAME_CHARACTERS = os.environ.get('VALID_NAME_CHARACTERS', "^[a-zA-Z-]+$")
+VALID_PHONE_CHARACTERS = os.environ.get('VALID_NAME_CHARACTERS', "^[0-9+]+$")
 
 
+
+#TEST DB VARIABLES
 TEST_DB_PASSWORD = os.environ.get(
     'DB_TEST_PASSWORD', 'Yt123Ghblevfk$%^Gfhjkm789')
 TEST_DB_USER = os.environ.get('DB_TEST_USER', 'test')
@@ -89,17 +100,26 @@ TEST_DB_NAME = os.environ.get('DB_TEST_NAME', 'test_my_blog')
 TEST_DB_URI = os.environ.get('TEST_DB_URI',
                              f'mysql://{TEST_DB_USER}:{TEST_DB_PASSWORD}@{DB_HOST}/{TEST_DB_NAME}')
 
+#TEST USER VARIABLES
 TEST_USER_ID = os.environ.get('TEST_USER_ID', 1)
 TEST_USER_PASSWORD = os.environ.get('TEST_USER_PASSWORD', 'password')
 TEST_USER_USERNAME = os.environ.get('TEST_USER_USERNAME', 'TestUser12346789-')
 TEST_USER_EMAIL = os.environ.get('TEST_USER_EMAIL', 'useremail@gmail.com')
 TEST_USER_SURNAME = os.environ.get('TEST_USER_SURNAME', 'Surname')
 TEST_USER_NAME = os.environ.get('TEST_USER_NAME', 'Name')
-TEST_USER_BIRTHDAY = os.environ.get('TEST_USER_PHONE', date.today())
+TEST_USER_BIRTHDAY = os.environ.get('TEST_USER_PHONE', "2022-10-19")
 TEST_USER_PHONE = os.environ.get('TEST_USER_PHONE', '+380501234567')
+
+
+
+#TEST STATUS VARIABLES
 TEST_STATUS_USER = os.environ.get('TEST_STATUS_USER', 'user')
 TEST_STATUS_POST = os.environ.get('TEST_STATUS_USER', 'Active')
+
+#TEST PHOTO VARIABLES
 TEST_PHOTO_PHOTO = os.environ.get('TEST_PHOTO_PHOTO', 'number_')
+
+#TEST POST VARIABLES
 TEST_POST_TITLE = os.environ.get('TEST_PHOTO_PHOTO', 'Test Posts')
 TEST_POST_TEXT = os.environ.get(
     'TEST_POST_TEXT', "We check what works, otherwise what's the point of writing them.")

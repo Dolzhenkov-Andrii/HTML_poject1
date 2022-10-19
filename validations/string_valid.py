@@ -6,6 +6,7 @@ from exceptions.validate import (
     InvalidStringMinSize,
     InvalidStringMaxSize,
     InvalidCharactersInString,
+    InvalidString,
 )
 
 
@@ -44,6 +45,7 @@ def invalid_string_characters(string, characters):
 
     return string
 
+
 def valid_string_characters(string, characters):
     """
         Checks for invalid string characters.
@@ -57,7 +59,36 @@ def valid_string_characters(string, characters):
 
     if pattern.search(string) is None:
         raise InvalidCharactersInString
-    # for symbol in characters:
-    #     if symbol in string:
-    #         raise InvalidCharactersInString
+
     return string
+
+
+def valid_string_size_and_characters(string, min_size, max_size, characters):
+    """Checks a string for correct length and valid characters
+
+    Args:
+        string (str): String to check
+        min (int): minimum length
+        max (int): maximum length
+        char (str): characters that are allowed in a string
+    """
+    valid_string = string
+
+    try:
+        valid_string_size(
+            string=valid_string,
+            min_size=min_size,
+            max_size=max_size,
+        )
+    except InvalidString as error:
+        raise error
+
+    try:
+        valid_string_characters(
+            string=valid_string,
+            characters=characters
+        )
+    except InvalidString as error:
+        raise error
+
+    return valid_string

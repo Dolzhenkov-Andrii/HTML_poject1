@@ -1,7 +1,9 @@
 """
     New test user
 """
+
 from hashlib import pbkdf2_hmac
+from dateutil import parser
 from tests.base_test_class import BaseAPItest
 from tokens.token_hendler import TokenManager
 from databases.models.user import User
@@ -44,7 +46,7 @@ class TestUser(BaseAPItest):
         new_user.email = TEST_USER_EMAIL
         new_user.surname = TEST_USER_SURNAME
         new_user.name = TEST_USER_NAME
-        new_user.birthday = TEST_USER_BIRTHDAY
+        new_user.birthday = parser.parse(TEST_USER_BIRTHDAY)
         new_user.phone = TEST_USER_PHONE
         new_user.status_id = UserStatus.query.filter_by(
             name=TEST_STATUS_USER).first().id
