@@ -10,6 +10,11 @@ class InvalidKey(APIexception):
     """
     message = 'Error getting by key'
 
+class InvalidType(APIexception):
+    """Invalid key in dict
+    """
+    message = 'Invalid type'
+
 class ErrorAuthorisation(InvalidString):
     """Authorisation Error
     """

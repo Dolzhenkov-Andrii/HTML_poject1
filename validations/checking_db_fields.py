@@ -3,7 +3,14 @@
 from dateutil import parser
 from email_validator import validate_email
 from validations.string_valid import valid_string_size_and_characters, valid_string_size
-from exceptions.validate import InvalidString, InvalidEmail, InvalidDate
+from exceptions.validate import (
+    InvalidString,
+    InvalidEmail,
+    InvalidDate,
+    ParserError,
+    EmailNotValidError,
+    InvalidType
+    )
 from config.config import (
     VALID_MAX_SIZE_PASSWORD,
     VALID_MAX_SIZE_PHONE,
@@ -32,7 +39,7 @@ def valid_username_field(username):
     """
 
     if isinstance(username, str) is False:
-        raise TypeError
+        raise InvalidType
 
     try:
         valid_username = valid_string_size_and_characters(
@@ -58,7 +65,7 @@ def valid_name_field(name):
     """
 
     if isinstance(name, str) is False:
-        raise TypeError
+        raise InvalidType
 
     try:
         valid_name = valid_string_size_and_characters(
@@ -83,7 +90,7 @@ def valid_surname_field(surname):
         Otherwise it will return an error
     """
     if isinstance(surname, str) is False:
-        raise TypeError
+        raise InvalidType
 
     try:
         valid_surname = valid_string_size_and_characters(
@@ -108,7 +115,7 @@ def valid_pasword_field(pasword):
         Otherwise it will return an error
     """
     if isinstance(pasword, str) is False:
-        raise TypeError
+        raise InvalidType
 
     try:
         valid_pasword = valid_string_size(
@@ -132,11 +139,11 @@ def valid_phone_field(phone):
         Otherwise it will return an error
     """
     if isinstance(phone, str) is False:
-        raise TypeError
+        raise InvalidType
 
     try:
         valid_phone = valid_string_size_and_characters(
-            string=phone,
+            string=phone[1:],
             min_size=VALID_MIN_SIZE_PHONE,
             max_size=VALID_MAX_SIZE_PHONE,
             characters=VALID_PHONE_CHARACTERS,
@@ -145,7 +152,7 @@ def valid_phone_field(phone):
         error.message = f'Error from phone ({error.message})'
         raise error
 
-    return valid_phone
+    return f'+{valid_phone}'
 
 
 def valid_email_field(email):
@@ -157,12 +164,13 @@ def valid_email_field(email):
         Otherwise it will return an error
     """
     if isinstance(email, str) is False:
-        raise TypeError
+        raise InvalidType
 
     try:
         valid_email = validate_email(email).email
-    except InvalidEmail as error:
-        raise error
+    except EmailNotValidError as error:
+        InvalidEmail.message = error.args[0]
+        raise InvalidEmail from error
 
     return valid_email
 
@@ -176,11 +184,11 @@ def valid_birthday_field(birthday):
         Otherwise it will return an error
     """
     if isinstance(birthday, str) is False:
-        raise TypeError
+        raise InvalidType
 
     try:
         valid_birthday = parser.parse(birthday)
-    except InvalidDate as error:
-        raise error
+    except ParserError as error:
+        raise InvalidDate from error
 
     return valid_birthday

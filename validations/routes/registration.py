@@ -1,7 +1,7 @@
 """Routs registration
 """
 
-from datetime import date
+from exceptions.validate import ErrorAuthorisation
 from validations.checking_db_fields import (
     valid_username_field,
     valid_pasword_field,
@@ -10,13 +10,6 @@ from validations.checking_db_fields import (
     valid_name_field,
     valid_birthday_field,
     valid_phone_field,
-)
-from exceptions.validate import ErrorAuthorisation, InvalidString
-from config.config import (
-    VALID_MAX_SIZE_PASSWORD,
-    VALID_MIN_SIZE_PASSWORD,
-    VALID_MAX_SIZE_USERNAME,
-    VALID_MIN_SIZE_USERNAME,
 )
 
 
