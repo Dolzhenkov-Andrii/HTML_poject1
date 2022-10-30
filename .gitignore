@@ -1,3 +1,6 @@
 __pycache__
-script
+.gitignore
 .vscode
+script.yml
+script.yaml
+script

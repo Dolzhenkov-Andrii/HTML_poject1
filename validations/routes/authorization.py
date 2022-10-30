@@ -33,7 +33,7 @@ class Authorization:
         try:
             validate_request_data = {
                 'username': valid_username_field(self.request_data['username']),
-                'pasword': valid_pasword_field(self.request_data['pasword']),
+                'password': valid_pasword_field(self.request_data['password']),
                 'remember_me': self.request_data['remember_me']
             }
         except Exception as error:

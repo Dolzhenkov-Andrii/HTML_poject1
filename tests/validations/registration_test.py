@@ -18,7 +18,7 @@ from config.config import (
 
 test_request_data = {
     'username': TEST_USER_USERNAME,
-    'pasword': TEST_USER_PASSWORD,
+    'password': TEST_USER_PASSWORD,
     'email': TEST_USER_EMAIL,
     'surname': TEST_USER_SURNAME,
     'name': TEST_USER_NAME,
@@ -45,7 +45,7 @@ class RegistrationValidTest(TestCase):
         self.assertEqual(
             valid_request_data['username'], test_request_data['username'])
         self.assertEqual(
-            valid_request_data['pasword'], test_request_data['pasword'])
+            valid_request_data['password'], test_request_data['password'])
         self.assertEqual(
             valid_request_data['email'], test_request_data['email'])
         self.assertEqual(

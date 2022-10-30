@@ -18,7 +18,7 @@ class Registration:
     """
     validate_fields = {
         'username': str,
-        'pasword': str,
+        'password': str,
         'email': str,
         'surname': str,
         'name': str,
@@ -41,7 +41,7 @@ class Registration:
         try:
             validate_request_data = {
                 'username': valid_username_field(self.request_data['username']),
-                'pasword': valid_pasword_field(self.request_data['pasword']),
+                'password': valid_pasword_field(self.request_data['password']),
                 'email': valid_email_field(self.request_data['email']),
                 'surname': valid_surname_field(self.request_data['surname']),
                 'name': valid_name_field(self.request_data['name']),

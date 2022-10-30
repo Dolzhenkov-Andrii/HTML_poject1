@@ -18,7 +18,8 @@ from config.config import (
     TEST_USER_EMAIL,
     TEST_USER_BIRTHDAY,
     TEST_USER_PHONE,
-    TEST_STATUS_USER,
+    PASSWORD_SALT,
+    ACTIVE_USER_STATUS,
 )
 
 
@@ -32,14 +33,14 @@ class TestUser(BaseAPItest):
         super().setUp()
         # Status new user
         user_status = UserStatus()
-        user_status.name = TEST_STATUS_USER
+        user_status.name = ACTIVE_USER_STATUS
         self.test_db.session.add(user_status)  # pylint: disable=no-member
         self.test_db.session.commit()  # pylint: disable=no-member
         # Test user
         new_user = User()
         pasword = pbkdf2_hmac('sha256',
                               TEST_USER_PASSWORD.encode('utf-8'),
-                              b'YtnCjkbD#$%Cfkfnf['*2,
+                              PASSWORD_SALT.encode('utf-8'),
                               100000)
         new_user.pasword = pasword.hex()
         new_user.username = TEST_USER_USERNAME
@@ -49,7 +50,7 @@ class TestUser(BaseAPItest):
         new_user.birthday = parser.parse(TEST_USER_BIRTHDAY)
         new_user.phone = TEST_USER_PHONE
         new_user.status_id = UserStatus.query.filter_by(
-            name=TEST_STATUS_USER).first().id
+            name=ACTIVE_USER_STATUS).first().id
         self.test_db.session.add(new_user)  # pylint: disable=no-member
         self.test_db.session.commit()  # pylint: disable=no-member
         self.access_token = {'access_token': TokenManager.create(

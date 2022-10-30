@@ -1,9 +1,8 @@
 """Test decorator token_required"""
 import time
 from tests.base_test_class import BaseAPItest
-from databases.models.userStatus import UserStatus
 from tokens.token_hendler import TokenManager
-from config.config import ACCESS_TOKEN_TIME, SECRET_KEY, TEST_STATUS_USER
+from config.config import ACCESS_TOKEN_TIME, SECRET_KEY, BASE_POSITION_POSTS
 from exceptions.token import MissingToken, ExpirationToken, InvalidToken
 
 
@@ -14,14 +13,7 @@ class TokenRequiredTest(BaseAPItest):
         test Missing token
         test Invalid token
     """
-    URL = '/api/status/1'
-
-    def setUp(self):
-        super().setUp()
-        status = UserStatus()
-        status.name = TEST_STATUS_USER
-        self.test_db.session.add(status) # pylint: disable=no-member
-        self.test_db.session.commit() # pylint: disable=no-member
+    URL = '/api/posts_amount'
 
     def test_valid_token(self):
         """
@@ -33,8 +25,8 @@ class TokenRequiredTest(BaseAPItest):
         resp = self.client.get(self.URL, headers=access_token)
         self.assertEqual(resp.status_code, 200)
         data = resp.get_json()
-        self.assertIn('name', data)
-        self.assertEqual(data['name'], TEST_STATUS_USER)
+        self.assertIn('size', data)
+        self.assertEqual(data['size'], 0)
 
     def test_expired_token(self):
         """

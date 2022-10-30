@@ -1,7 +1,7 @@
 """Test route posts"""
-from config.config import BASE_COUNT_POSTS, BASE_POSITION_POSTS, TEST_POST_COUNT
-from .base_class_posts import TestsPosts
 from exceptions.posts import PostArgsError
+from .base_class_posts import TestsPosts
+from config.config import BASE_COUNT_POSTS, BASE_POSITION_POSTS, TEST_POST_COUNT
 
 
 class PostsTest(TestsPosts):

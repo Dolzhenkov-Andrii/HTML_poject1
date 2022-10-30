@@ -13,6 +13,7 @@ from decorators.token import token_required
 from exceptions.posts import PostArgsError
 from config.config import BASE_COUNT_POSTS, BASE_POSITION_POSTS
 
+
 posts = Blueprint('posts', __name__, template_folder='templates')
 
 

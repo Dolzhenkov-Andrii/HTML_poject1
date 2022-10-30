@@ -186,6 +186,8 @@ class ValidSurnameFieldTest(TestCase):
         except InvalidString as error:
             self.assertIn(InvalidStringMaxSize.message, error.message)
         self.assertEqual(not_return_surname, None)
+        #===============================================================================
+        #self.assertRaises(InvalidStringMaxSize,error)
 
     def test_error_characters(self):
         """
