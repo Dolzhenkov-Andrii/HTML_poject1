@@ -74,7 +74,6 @@ def get_value(key, default_value=None):
     return default_value
 
 
-
 # APP VARIABLES
 APP_HOST = get_value('APP_HOST')
 APP_PORT = get_value('APP_PORT')
@@ -94,7 +93,7 @@ BASE_POSITION_POSTS = get_value('BASE_POSITION_POSTS', 0)
 BASE_COUNT_POSTS = get_value('BASE_COUNT_POSTS')
 ACTIVE_USER_STATUS = get_value('ACTIVE_USER_STATUS')
 NOT_ACTIVE_USER_STATUS = get_value('NOT_ACTIVE_USER_STATUS')
-PASSWORD_SALT =  get_value('PASSWORD_SALT')
+PASSWORD_SALT = get_value('PASSWORD_SALT')
 
 
 # VALID VARIABLES
@@ -111,11 +110,11 @@ VALID_MAX_SIZE_SURNAME = get_value('VALID_MAX_SIZE_SURNAME', 30)
 VALID_MIN_SIZE_PHONE = get_value('VALID_MIN_SIZE_PHONE', 8)
 VALID_MAX_SIZE_PHONE = get_value('VALID_MAX_SIZE_PHONE', 16)
 VALID_USERNAME_CHARACTERS = get_value(
-    'VALID_USERNAME_CHARACTERS', "^[a-zA-Z0-9_-]") +'+$'
-VALID_NAME_CHARACTERS = get_value('VALID_NAME_CHARACTERS', "^[a-zA-Z-]") +'+$'
+    'VALID_USERNAME_CHARACTERS', "^[a-zA-Z0-9_-]") + '+$'
+VALID_NAME_CHARACTERS = get_value('VALID_NAME_CHARACTERS', "^[a-zA-Z-]") + '+$'
 VALID_SURNAME_CHARACTERS = get_value(
-    'VALID_SURNAME_CHARACTERS', "^[a-zA-Z-]") +'+$'
-VALID_PHONE_CHARACTERS = get_value('VALID_PHONE_CHARACTERS', "^[0-9]") +'+$'
+    'VALID_SURNAME_CHARACTERS', "^[a-zA-Z-]") + '+$'
+VALID_PHONE_CHARACTERS = get_value('VALID_PHONE_CHARACTERS', "^[0-9]") + '+$'
 
 
 # TEST DB VARIABLES
@@ -124,7 +123,7 @@ TEST_DB_PASSWORD = get_value(
 TEST_DB_USER = get_value('TEST_DB_USER')
 TEST_DB_NAME = get_value('TEST_DB_NAME')
 TEST_DB_URI = get_value('TEST_DB_URI',
-                             f'mysql://{TEST_DB_USER}:{TEST_DB_PASSWORD}@{DB_HOST}/{TEST_DB_NAME}')
+                        f'mysql://{TEST_DB_USER}:{TEST_DB_PASSWORD}@{DB_HOST}/{TEST_DB_NAME}')
 
 # TEST USER VARIABLES
 TEST_USER_ID = get_value('TEST_USER_ID', 1)
@@ -151,4 +150,3 @@ TEST_POST_TITLE = get_value('TEST_PHOTO_PHOTO', 'title')
 TEST_POST_TEXT = get_value(
     'TEST_POST_TEXT', "text.")
 TEST_POST_COUNT = get_value('TEST_POST_COUNT', 6)
-

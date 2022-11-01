@@ -5,6 +5,7 @@ from HTMLTestRunner.runner import HTMLTestRunner
 from tests.token_required_test import TokenRequiredTest
 from tests.routes.refresh_token_test import RefreshTokenTest
 from tests.routes.author_test import AuthorizationTest
+from tests.routes.registr_test import RegistrationTest
 from tests.routes.photos.photo_test import PhotoTest
 from tests.routes.posts.posts_amount_test import PostsAmountTest
 from tests.routes.posts.posts_test import PostsTest
@@ -15,6 +16,7 @@ suite = unittest.TestSuite([
     unittest.TestLoader().loadTestsFromTestCase(TokenRequiredTest),
     unittest.TestLoader().loadTestsFromTestCase(RefreshTokenTest),
     unittest.TestLoader().loadTestsFromTestCase(AuthorizationTest),
+    unittest.TestLoader().loadTestsFromTestCase(RegistrationTest),
     unittest.TestLoader().loadTestsFromTestCase(PhotoTest),
     unittest.TestLoader().loadTestsFromTestCase(PostsAmountTest),
     unittest.TestLoader().loadTestsFromTestCase(PostsTest),
