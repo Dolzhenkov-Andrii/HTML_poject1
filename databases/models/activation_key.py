@@ -15,6 +15,7 @@ class ActivationKey(db.Model):  # pylint: disable=too-few-public-methods
     """
     id: int  # pylint: disable=C0103
     hash_key: str
+    user_id: int
 
     __tablename__ = "activation_key"
 

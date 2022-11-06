@@ -40,10 +40,30 @@ def activate_email(email, username, coding):
         raise f'{err}\nFailed to open template'
 
     temap = temap.replace('#username#', username)
-    temap = temap.replace('#coding#', coding)
+    temap = temap.replace('#activation_key#', coding)
 
     send_email(
         email,
         temap,
         f'Hello {username} ! Welcome to MyBlog!'
+    )
+
+
+def password_recovery(email, username, coding):
+    """
+        Sending a message to recovery password
+    """
+    try:
+        with open("./html/recovery_password.html", encoding='utf-8') as file:
+            temap = file.read()
+    except IOError as err:
+        raise f'{err}\nFailed to open template'
+
+    temap = temap.replace('#username#', username)
+    temap = temap.replace('#confirmation#', coding)
+
+    send_email(
+        email,
+        temap,
+        f'Hello {username}! Have you forgotten your password?'
     )

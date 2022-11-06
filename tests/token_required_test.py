@@ -2,7 +2,7 @@
 import time
 from tests.base_test_class import BaseAPItest
 from tokens.token_hendler import TokenManager
-from config.config import ACCESS_TOKEN_TIME, SECRET_KEY, BASE_POSITION_POSTS
+from config.config import ACCESS_TOKEN_TIME, SECRET_KEY
 from exceptions.token import MissingToken, ExpirationToken, InvalidToken
 
 

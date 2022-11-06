@@ -4,11 +4,7 @@
 from hashlib import pbkdf2_hmac
 from flask_api import status
 from flask import Blueprint, request
-from exceptions.token import InvalidToken, DecodeToken, MissingToken, ExpirationToken
-from exceptions.validate import InvalidAuthorisation, InvalidString, ErrorAuthorisation
-from databases.models.user import User
-from tokens.token_hendler import TokenManager
-from validations.routes.authorization import Authorization
+from config.db import db
 from config.config import (
     ACCESS_TOKEN_TIME,
     REFRESH_TOKEN_TIME,
@@ -16,6 +12,21 @@ from config.config import (
     PASSWORD_SALT,
     SECRET_KEY,
 )
+from exceptions.token import InvalidToken, DecodeToken, MissingToken, ExpirationToken
+from exceptions.validate import (
+    InvalidAuthorisation,
+    InvalidString,
+    ErrorAuthorisation,
+    InvalidEmail,
+    InvalidCharactersInString
+    )
+from databases.models.user import User
+from databases.models.activation_key import ActivationKey
+from tokens.token_hendler import TokenManager
+from validations.routes.authorization import Authorization
+from validations.checking_db_fields import valid_email_field, valid_username_field
+from service.email_messange import password_recovery
+
 author = Blueprint('author', __name__, template_folder='templates')
 
 
@@ -88,3 +99,51 @@ def authorization():
 
     except DecodeToken as error:
         return error.message, status.HTTP_400_BAD_REQUEST
+
+
+
+@author.route('/password-recovery', methods=['POST'])
+def set_password_recovery():
+    """
+        Password recovery
+    """
+    email = request.args.get('email', default=None, type=str)
+    username = request.args.get('username', default=None, type=str)
+    if email is None and username is None:
+        return 'Missing email or username', status.HTTP_400_BAD_REQUEST
+
+    if email:
+        try:
+            valid_email = valid_email_field(email)
+        except InvalidEmail as err:
+            return err.message, status.HTTP_400_BAD_REQUEST
+
+        user = User.query.filter_by(email=valid_email).first()
+        if user is None:
+            return 'No user with this email address', status.HTTP_404_NOT_FOUND
+    elif username:
+        try:
+            valid_username = valid_username_field(username)
+        except InvalidCharactersInString as err:
+            return err.message, status.HTTP_400_BAD_REQUEST
+
+        user = User.query.filter_by(username=valid_username).first()
+        if user is None:
+            return 'No user with this username', status.HTTP_404_NOT_FOUND
+    else:
+        return 'Invalid user data', status.HTTP_400_BAD_REQUEST
+
+    hash_key = TokenManager.create(
+            SECRET_KEY, REFRESH_REMEMBER_TOKEN_TIME, {'user_id': user.id, })
+    activ_key = ActivationKey()
+    activ_key.hash_key = hash_key
+    activ_key.user_id = user.id
+    db.session.add(activ_key)  # pylint: disable=no-member
+    db.session.commit()  # pylint: disable=no-member
+
+    password_recovery(user.email, user.username, hash_key)
+
+    return {
+        'username': user.username,
+        'email': user.email,
+    }, status.HTTP_200_OK
