@@ -1,6 +1,6 @@
-"""
-    tmp
-"""
+'''
+    Registrations and activations routes for User
+'''
 from hashlib import pbkdf2_hmac
 from flask_api import status
 from flask import Blueprint, request
@@ -23,7 +23,7 @@ from service.email_messange import activate_email
 from validations.routes.registration import Registration
 from validations.routes.authorization import Authorization
 from exceptions.token import InvalidToken, MissingToken, ExpirationToken, DecodeToken
-from exceptions.validate import InvalidString, ErrorAuthorisation, InvalidAuthorisation
+from exceptions.validate import InvalidString, ErrorForms, InvalidAuthorisation
 
 registration = Blueprint('registeration', __name__,
                          template_folder='templates')
@@ -31,16 +31,26 @@ registration = Blueprint('registeration', __name__,
 
 @registration.route('/new-user', methods=['POST'])
 def set_registration():
-    """
+    '''
         New user
-    """
+    '''
     try:
         registr_form = Registration(**request.get_json())
         validated_data = registr_form.validate()
-    except ErrorAuthorisation as error:
+    except ErrorForms as error:
         return error.message, status.HTTP_400_BAD_REQUEST
     except InvalidString as error:
         return error.message, status.HTTP_400_BAD_REQUEST
+
+    if_username = User.query.filter_by(
+        username=validated_data['username']).first()
+    if if_username:
+        return 'There is already a user with the same username', status.HTTP_400_BAD_REQUEST
+
+    if_user_email = User.query.filter_by(
+        email=validated_data['email']).first()
+    if if_user_email:
+        return 'There is already a user with this email address', status.HTTP_400_BAD_REQUEST
 
     user_status = UserStatus.query.filter_by(
         name=NOT_ACTIVE_USER_STATUS).first()
@@ -77,7 +87,10 @@ def set_registration():
     db.session.add(activ_key)  # pylint: disable=no-member
     db.session.commit()  # pylint: disable=no-member
 
-    activate_email(user_in_db.email, user_in_db.username, hash_key)
+    try:
+        activate_email(user_in_db.email, user_in_db.username, hash_key)
+    except IOError as err:
+        return err.strerror, status.HTTP_500_INTERNAL_SERVER_ERROR
 
     return {
         'username': user_in_db.username,
@@ -87,9 +100,9 @@ def set_registration():
 
 @registration.route('/account-activation', methods=['GET'])
 def get_activation():
-    """
+    '''
         Activation user email
-    """
+    '''
     activation_key = request.args.get('activation', default=None, type=str)
 
     if not activation_key is None:
@@ -135,23 +148,20 @@ def get_activation():
 
 @registration.route('/account-reactivation', methods=['POST'])
 def set_reactivation():
-    """
+    '''
         Account Reactivation If the key has expired
-    """
+    '''
     try:
         sing_in = Authorization(**request.get_json())
         validated_data = sing_in.validate()
-    except ErrorAuthorisation as error:
+    except ErrorForms as error:
         return error.message, status.HTTP_400_BAD_REQUEST
     except InvalidString as error:
         return error.message, status.HTTP_400_BAD_REQUEST
     try:
         user = User.query.filter_by(username=validated_data['username']).first()
-        if user is None:
-            return None, status.HTTP_404_NOT_FOUND
-
         hash_key = pbkdf2_hmac('sha256', validated_data['password'].encode(
-                "utf-8"), PASSWORD_SALT.encode("utf-8"), 100000)
+                'utf-8'), PASSWORD_SALT.encode('utf-8'), 100000)
         if user is None or (user.pasword == hash_key.hex()) is False:
             return InvalidAuthorisation.message, status.HTTP_401_UNAUTHORIZED
 
@@ -169,5 +179,7 @@ def set_reactivation():
             'username': user.username,
             'email': user.email,
         }, status.HTTP_200_OK
+    except IOError as err:
+        return err.strerror, status.HTTP_500_INTERNAL_SERVER_ERROR
     except DecodeToken as error:
         return error.message, status.HTTP_400_BAD_REQUEST

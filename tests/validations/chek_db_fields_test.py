@@ -49,6 +49,8 @@ class ValidUsernameFieldTest(TestCase):
         """
         not_return_username = None
         invalid_username = True
+
+
         try:
             not_return_username = valid_email_field(invalid_username)
         except InvalidType as error:
@@ -367,8 +369,8 @@ class ValidEmailFieldTest(TestCase):
     def test_successful_validation(self):
         """Successful_validation
         """
-        valid_phone = valid_email_field(TEST_USER_EMAIL)
-        self.assertEqual(valid_phone, TEST_USER_EMAIL)
+        valid_email = valid_email_field(TEST_USER_EMAIL)
+        self.assertEqual(valid_email, TEST_USER_EMAIL)
 
     def test_type_error(self):
         """

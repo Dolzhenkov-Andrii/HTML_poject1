@@ -19,7 +19,8 @@ from config.config import (
     TEST_USER_BIRTHDAY,
     TEST_USER_PHONE,
     PASSWORD_SALT,
-    NOT_ACTIVE_USER_STATUS,
+    ACTIVE_USER_STATUS,
+    NOT_ACTIVE_USER_STATUS
 )
 
 
@@ -53,7 +54,9 @@ class TestUser(BaseAPItest):
             name=NOT_ACTIVE_USER_STATUS).first().id
         self.test_db.session.add(new_user)  # pylint: disable=no-member
         self.test_db.session.commit()  # pylint: disable=no-member
-        self.access_token = {'access_token': TokenManager.create(
-            SECRET_KEY, ACCESS_TOKEN_TIME, {'user_id': 1, }), }
         self.user_id = User.query.filter_by(
             username=TEST_USER_USERNAME).first().id
+        self.test_user = User.query.filter_by(
+            username=TEST_USER_USERNAME).first()
+        self.access_token = {'access_token': TokenManager.create(
+            SECRET_KEY, ACCESS_TOKEN_TIME, {'user_id': self.user_id, }), }

@@ -1,6 +1,6 @@
-"""
+'''
     Token Manager
-"""
+'''
 from datetime import datetime, timedelta
 import jwt
 from flask_api import status
@@ -9,11 +9,12 @@ from exceptions.token import DecodeToken, MissingToken, ExpirationToken, Invalid
 from exceptions.validate import InvalidKey
 
 class TokenManager:
-    """TokenManager
-    """
+    '''TokenManager
+    '''
+
     @classmethod
     def create(cls, key, time, data, algoritm='HS256'):
-        """Create token
+        '''Create token
 
         Args:
             key (str): secret key for token
@@ -23,7 +24,7 @@ class TokenManager:
 
         Returns:
             str: Token
-        """
+        '''
         try:
             token = jwt.encode({
                 'data': data,
@@ -35,7 +36,7 @@ class TokenManager:
 
     @classmethod
     def valid(cls, key, token, algoritm='HS256'):
-        """Validate token
+        '''Validate token
 
         Args:
             key (str): secret key for token
@@ -43,14 +44,20 @@ class TokenManager:
             algoritm (str): encryption algorithm. Defaults to 'HS256'.
 
         Raises:
-            DecodeToken: if key is None or token is None
-            DecodeToken: if token life is end
+            DecodeToken: if key is None
+            MissingToken: if token is None
+            ExpirationToken: if token life is end
+            InvalidToken: if toke is bad
+
 
         Returns:
             bool: True - if token life
-        """
-        if key is None or token is None:
+        '''
+        if key is None:
+            raise DecodeToken
+        if token is None:
             raise MissingToken
+
         try:
             token_data = jwt.decode(token, key, algorithms=[algoritm])
         except Exception as error:
@@ -62,7 +69,7 @@ class TokenManager:
 
     @classmethod
     def token_data(cls, key, token, algoritm='HS256'):
-        """remembers user
+        '''remembers user
 
         Args:
             key (str): secret key for token
@@ -70,17 +77,49 @@ class TokenManager:
             algoritm (str): encryption algorithm. Defaults to 'HS256'.
 
         Raises:
-            DecodeToken: if key is None or token is None
-            DecodeToken: if token life is end
+            DecodeToken: if key is None
+            MissingToken: if token is None
 
         Returns:
-            bool: True - if token life
-        """
-        if key is None or token is None:
+            obj: Dict - if token life
+        '''
+
+        if key is None:
             raise DecodeToken
-        token_data = jwt.decode(token, key, algorithms=[algoritm])
+        if token is None:
+            raise MissingToken
+
         try:
+            token_data = jwt.decode(token, key, algorithms=[algoritm])
             return {'user_id': valid_key(token_data['data'], 'user_id'),
                     'remember': valid_key(token_data['data'], 'remember'),}
         except InvalidKey as error:
             return error.message, status.HTTP_400_BAD_REQUEST
+
+    @classmethod
+    def get_id_user(cls, key, token, algoritm='HS256'):
+        '''get ID user
+
+        Args:
+            key (str): secret key for token
+            token (str): token
+            algoritm (str): encryption algorithm. Defaults to 'HS256'.
+
+        Raises:
+            DecodeToken: if key is None
+            MissingToken: if token is None
+
+        Returns:
+            int: ID user
+        '''
+
+        if key is None:
+            raise DecodeToken
+        if token is None:
+            raise MissingToken
+
+        try:
+            token_data = jwt.decode(token, key, algorithms=[algoritm])
+            return valid_key(token_data['data'], 'user_id')
+        except InvalidKey as error:
+            raise error

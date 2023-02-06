@@ -15,15 +15,16 @@ class InvalidType(APIexception):
     """
     message = 'Invalid type'
 
-class ErrorAuthorisation(InvalidString):
+class ErrorForms(APIexception):
     """Authorisation Error
     """
-    message = 'Authorisation Error'
+    message = 'Forms Error'
 
-class InvalidAuthorisation(ErrorAuthorisation):
+class InvalidAuthorisation(ErrorForms):
     """Wrong login or password
     """
     message = 'Wrong login or password'
+
 
 class InvalidStringMaxSize(InvalidString):
     """invalid string max size

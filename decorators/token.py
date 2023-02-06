@@ -1,6 +1,6 @@
-"""
+'''
     Decorators
-"""
+'''
 from flask_api import status
 from flask import request
 from config.config import SECRET_KEY
@@ -9,11 +9,11 @@ from exceptions.token import DecodeToken, MissingToken, InvalidToken
 
 
 def token_required(func):
-    """Token_required
+    '''Token_required
 
     Args:
         func (@app.route): Checks for tokens and their renewal
-    """
+    '''
 
     def decorated(*args, **kwargs):
         if 'Access-Token' in dict(request.headers):

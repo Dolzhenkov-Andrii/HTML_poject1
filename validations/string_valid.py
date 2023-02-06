@@ -6,7 +6,8 @@ from exceptions.validate import (
     InvalidStringMinSize,
     InvalidStringMaxSize,
     InvalidCharactersInString,
-    InvalidString,
+    InvalidType,
+    APIexception,
 )
 
 
@@ -17,9 +18,9 @@ def valid_string_size(string, min_size, max_size):
         Returns a string if it matches.
     """
     if isinstance(string, str) is False:
-        raise TypeError
+        raise InvalidType
     if (isinstance(min_size, int) and isinstance(max_size, int)) is False:
-        raise TypeError
+        raise InvalidType
 
     if len(string) < min_size:
         raise InvalidStringMinSize
@@ -36,7 +37,7 @@ def invalid_string_characters(string, characters):
         Returns a string if there are no such characters.
     """
     if (isinstance(string, str) and isinstance(characters, str)) is False:
-        raise TypeError
+        raise InvalidType
 
     pattern = re.compile(characters)
 
@@ -53,7 +54,7 @@ def valid_string_characters(string, characters):
         Returns a string if there are no such characters.
     """
     if (isinstance(string, str) and isinstance(characters, str)) is False:
-        raise TypeError
+        raise InvalidType
 
     pattern = re.compile(characters)
 
@@ -72,23 +73,18 @@ def valid_string_size_and_characters(string, min_size, max_size, characters):
         max (int): maximum length
         char (str): characters that are allowed in a string
     """
-    valid_string = string
 
     try:
         valid_string_size(
-            string=valid_string,
+            string=string,
             min_size=min_size,
             max_size=max_size,
         )
-    except InvalidString as error:
-        raise error
-
-    try:
         valid_string_characters(
-            string=valid_string,
+            string=string,
             characters=characters
         )
-    except InvalidString as error:
+    except APIexception as error:
         raise error
 
-    return valid_string
+    return string

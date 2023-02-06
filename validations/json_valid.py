@@ -1,10 +1,10 @@
-"""
+'''
     JSON manager
-"""
+'''
 from exceptions.validate import InvalidKey
 
 def valid_key(json_data, value):
-    """Key verification
+    '''Key verification
 
     Args:
         json_data (JSON): request data in json format
@@ -16,7 +16,7 @@ def valid_key(json_data, value):
 
     Returns:
         str: dictionary data by key
-    """
+    '''
     if json_data:
         if json_data[value]:
             return json_data[value]

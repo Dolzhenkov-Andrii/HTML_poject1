@@ -10,6 +10,8 @@ from config.config import (
     TEST_USER_NAME,
     TEST_USER_BIRTHDAY,
     TEST_USER_PHONE,
+    TEST_USER_USERNAME,
+    TEST_USER_EMAIL,
 )
 
 
@@ -24,11 +26,11 @@ class RegistrationTest(TestUser):
     def test_successful_registration(self):
         """Successful registration"""
         registr_form = {
-                'username': 'oscur1k2',
+                'username': f'{TEST_USER_USERNAME}new',
                 'password': TEST_USER_PASSWORD,
-                'email': 'oscurabow@gmail.com',
-                'surname': TEST_USER_SURNAME+'-new',
-                'name': TEST_USER_NAME+'-new',
+                'email': f'new{TEST_USER_EMAIL}',
+                'surname': TEST_USER_SURNAME+'new',
+                'name': TEST_USER_NAME+'new',
                 'birthday': TEST_USER_BIRTHDAY,
                 'phone': TEST_USER_PHONE+'5',
             }

@@ -1,7 +1,7 @@
-"""
+'''
     Photo routes:
         /photo
-"""
+'''
 
 from flask_api import status
 from flask import request
@@ -14,10 +14,10 @@ photos = Blueprint('photos', __name__, template_folder='templates')
 @photos.route('/photo', endpoint='get_photo', methods=['GET'])
 @token_required
 def get_photo():
-    """
+    '''
         Photo
         ?id=Photo.id
-    """
+    '''
     photo_id = request.args.get('id', default=None, type=int)
 
     if photo_id is None or photo_id < 0:

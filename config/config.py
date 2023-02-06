@@ -1,4 +1,4 @@
-"""Config
+'''Config
 
     APP_HOST
     APP_PORT
@@ -54,7 +54,7 @@
     TEST_POST_TITLE
     TEST_POST_TEXT
     TEST_POST_COUNT
-"""
+'''
 
 
 import yaml
@@ -64,7 +64,7 @@ with open(r'./script.yaml', encoding='utf-8') as file:
 
 
 def get_value(key, default_value=None):
-    """get_value from config"""
+    '''get_value from config'''
     if script_data:
         try:
             if script_data[key]:
@@ -110,11 +110,11 @@ VALID_MAX_SIZE_SURNAME = get_value('VALID_MAX_SIZE_SURNAME', 30)
 VALID_MIN_SIZE_PHONE = get_value('VALID_MIN_SIZE_PHONE', 8)
 VALID_MAX_SIZE_PHONE = get_value('VALID_MAX_SIZE_PHONE', 16)
 VALID_USERNAME_CHARACTERS = get_value(
-    'VALID_USERNAME_CHARACTERS', "^[a-zA-Z0-9_-]") + '+$'
-VALID_NAME_CHARACTERS = get_value('VALID_NAME_CHARACTERS', "^[a-zA-Z-]") + '+$'
+    'VALID_USERNAME_CHARACTERS', '^[a-zA-Z0-9_-]') + '+$'
+VALID_NAME_CHARACTERS = get_value('VALID_NAME_CHARACTERS', '^[a-zA-Z-]') + '+$'
 VALID_SURNAME_CHARACTERS = get_value(
-    'VALID_SURNAME_CHARACTERS', "^[a-zA-Z-]") + '+$'
-VALID_PHONE_CHARACTERS = get_value('VALID_PHONE_CHARACTERS', "^[0-9]") + '+$'
+    'VALID_SURNAME_CHARACTERS', '^[a-zA-Z-]') + '+$'
+VALID_PHONE_CHARACTERS = get_value('VALID_PHONE_CHARACTERS', '^[0-9]') + '+$'
 
 
 # TEST DB VARIABLES
@@ -133,7 +133,7 @@ TEST_USER_EMAIL = get_value(
     'TEST_USER_EMAIL', 'useresadsadxsadsadsa.asdas.smail@gmail.com')
 TEST_USER_SURNAME = get_value('TEST_USER_SURNAME', 'Surname')
 TEST_USER_NAME = get_value('TEST_USER_NAME', 'Name')
-TEST_USER_BIRTHDAY = get_value('TEST_USER_BIRTHDAY', "2022-10-19")
+TEST_USER_BIRTHDAY = get_value('TEST_USER_BIRTHDAY', '2022-10-19')
 TEST_USER_PHONE = get_value('TEST_USER_PHONE', '+380501234567')
 TEST_USER_COUNT = get_value('TEST_USER_COUNT', 6)
 
@@ -148,5 +148,5 @@ TEST_PHOTO_PHOTO = get_value('TEST_PHOTO_PHOTO', 'number_')
 # TEST POST VARIABLES
 TEST_POST_TITLE = get_value('TEST_PHOTO_PHOTO', 'title')
 TEST_POST_TEXT = get_value(
-    'TEST_POST_TEXT', "text.")
+    'TEST_POST_TEXT', 'text.')
 TEST_POST_COUNT = get_value('TEST_POST_COUNT', 6)

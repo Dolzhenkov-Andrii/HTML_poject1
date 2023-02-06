@@ -1,6 +1,6 @@
-"""
+'''
     Service for sending emails
-"""
+'''
 
 from smtplib import SMTP, SMTPException
 from email.mime.text import MIMEText
@@ -8,17 +8,17 @@ from config.config import APP_EMAIL, APP_EMAIL_PASSWORD
 
 
 def send_email(email, sample_html, subject):
-    """sending emails"""
+    '''sending emails'''
 
     sender = APP_EMAIL
     password = APP_EMAIL_PASSWORD
 
-    server = SMTP("smtp.gmail.com", 587)
+    server = SMTP('smtp.gmail.com', 587)
     server.starttls()
 
     try:
         server.login(sender, password)
-        msg = MIMEText(sample_html, "html")
+        msg = MIMEText(sample_html, 'html')
         msg['From'] = sender
         msg['To'] = email
         msg['Subject'] = subject
@@ -30,11 +30,11 @@ def send_email(email, sample_html, subject):
 
 
 def activate_email(email, username, coding):
-    """
+    '''
         Sending a message to activate the user's email
-    """
+    '''
     try:
-        with open("./html/activaite_email.html", encoding='utf-8') as file:
+        with open('./html/activaite_email.html', encoding='utf-8') as file:
             temap = file.read()
     except IOError as err:
         raise f'{err}\nFailed to open template'
@@ -50,11 +50,11 @@ def activate_email(email, username, coding):
 
 
 def password_recovery(email, username, coding):
-    """
+    '''
         Sending a message to recovery password
-    """
+    '''
     try:
-        with open("./html/recovery_password.html", encoding='utf-8') as file:
+        with open('./html/recovery_password.html', encoding='utf-8') as file:
             temap = file.read()
     except IOError as err:
         raise f'{err}\nFailed to open template'

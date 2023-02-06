@@ -1,7 +1,7 @@
-"""Routs registration
-"""
+'''Routs registration
+'''
 
-from exceptions.validate import ErrorAuthorisation
+from exceptions.validate import ErrorForms
 from validations.checking_db_fields import (
     valid_username_field,
     valid_pasword_field,
@@ -14,8 +14,8 @@ from validations.checking_db_fields import (
 
 
 class Registration:
-    """Registration check
-    """
+    '''Registration check
+    '''
     validate_fields = {
         'username': str,
         'password': str,
@@ -31,13 +31,13 @@ class Registration:
 
 
     def validate(self):
-        """Key verification
-        """
+        '''Key verification
+        '''
         for key in Registration.validate_fields:  # pylint: disable=C0206
             if (key not in self.request_data
                     or isinstance(self.request_data[key],
                                   Registration.validate_fields[key]) is False):
-                raise ErrorAuthorisation
+                raise ErrorForms
         try:
             validate_request_data = {
                 'username': valid_username_field(self.request_data['username']),
@@ -48,6 +48,6 @@ class Registration:
                 'birthday': valid_birthday_field(self.request_data['birthday']),
                 'phone': valid_phone_field(self.request_data['phone']),
             }
-        except Exception as error:
+        except ErrorForms as error:
             raise error
         return validate_request_data

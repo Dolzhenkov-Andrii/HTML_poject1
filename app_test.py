@@ -1,4 +1,5 @@
-"""Testing suite"""
+'''Testing suite'''
+
 import unittest
 from HTMLTestRunner.runner import HTMLTestRunner
 
@@ -32,8 +33,8 @@ if __name__ == '__main__':
         title='Tests routes for API',
         report_name='report',
         open_in_browser=True,
-        description="HTMLTestReport",
-        tested_by="Dolzhenkov Andrii",
+        description='HTMLTestReport',
+        tested_by='Dolzhenkov Andrii',
         add_traceback=True
     )
 

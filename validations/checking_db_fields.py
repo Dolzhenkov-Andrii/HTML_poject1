@@ -1,5 +1,5 @@
-""" Name chek
-"""
+''' Name chek
+'''
 from dateutil import parser
 from email_validator import validate_email
 from validations.string_valid import valid_string_size_and_characters, valid_string_size
@@ -30,16 +30,13 @@ from config.config import (
 
 
 def valid_username_field(username):
-    """
+    '''
         Checking the username for correctness
         username: str
         valid_username: str
         Return verified valid_username
         Otherwise it will return an error
-    """
-
-    if isinstance(username, str) is False:
-        raise InvalidType
+    '''
 
     try:
         valid_username = valid_string_size_and_characters(
@@ -56,16 +53,13 @@ def valid_username_field(username):
 
 
 def valid_name_field(name):
-    """
+    '''
         Checking the name for correctness
         name: str
         valid_name: str
         Return verified valid_name
         Otherwise it will return an error
-    """
-
-    if isinstance(name, str) is False:
-        raise InvalidType
+    '''
 
     try:
         valid_name = valid_string_size_and_characters(
@@ -82,15 +76,13 @@ def valid_name_field(name):
 
 
 def valid_surname_field(surname):
-    """
+    '''
         Checking the surname for correctness
         surname: str
         valid_surname: str
         Return verified valid_surname
         Otherwise it will return an error
-    """
-    if isinstance(surname, str) is False:
-        raise InvalidType
+    '''
 
     try:
         valid_surname = valid_string_size_and_characters(
@@ -107,15 +99,13 @@ def valid_surname_field(surname):
 
 
 def valid_pasword_field(pasword):
-    """
+    '''
         Checking the pasword for correctness
         pasword: str
         valid_pasword: str
         Return verified valid_pasword
         Otherwise it will return an error
-    """
-    if isinstance(pasword, str) is False:
-        raise InvalidType
+    '''
 
     try:
         valid_pasword = valid_string_size(
@@ -131,15 +121,13 @@ def valid_pasword_field(pasword):
 
 
 def valid_phone_field(phone):
-    """
+    '''
         Checking the phone for correctness
         phone: str
         valid_phone: str
         Return verified valid_phone
         Otherwise it will return an error
-    """
-    if isinstance(phone, str) is False:
-        raise InvalidType
+    '''
 
     try:
         valid_phone = valid_string_size_and_characters(
@@ -156,13 +144,13 @@ def valid_phone_field(phone):
 
 
 def valid_email_field(email):
-    """
+    '''
         Checking the email for correctness
         email: str
         valid_email: str
         Return verified valid_email
         Otherwise it will return an error
-    """
+    '''
     if isinstance(email, str) is False:
         raise InvalidType
 
@@ -176,13 +164,13 @@ def valid_email_field(email):
 
 
 def valid_birthday_field(birthday):
-    """
+    '''
         Checking the name for correctness
         birthday: str
         valid_birthday: dtae
         Return verified valid_birthday
         Otherwise it will return an error
-    """
+    '''
     if isinstance(birthday, str) is False:
         raise InvalidType
 

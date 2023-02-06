@@ -1,6 +1,6 @@
-"""
+'''
     Photo_Post association table
-"""
+'''
 
 from sqlalchemy import Integer,Column, ForeignKey, Table
 from config.db import db

@@ -1,6 +1,6 @@
-"""
+'''
     User module
-"""
+'''
 from dataclasses import dataclass
 from datetime import date
 from sqlalchemy import Integer, Column, String, Date, ForeignKey
@@ -13,10 +13,10 @@ from config.db import db
 
 @dataclass
 class User(db.Model):  # pylint: disable=too-few-public-methods
-    """
+    '''
         User model class
-    """
-    __tablename__ = "User"
+    '''
+    __tablename__ = 'User'
 
     id: int  # pylint: disable=C0103
     username: str

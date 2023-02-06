@@ -1,6 +1,6 @@
-"""
+'''
     Post module
-"""
+'''
 
 from dataclasses import dataclass
 from datetime import date, datetime
@@ -15,9 +15,9 @@ from config.db import db
 
 @dataclass
 class Post(db.Model):  # pylint: disable=too-few-public-methods
-    """
+    '''
         Post model class
-    """
+    '''
     id: int # pylint: disable=C0103
     title: str
     creation_date: date
@@ -29,7 +29,7 @@ class Post(db.Model):  # pylint: disable=too-few-public-methods
     user: User
     photos: Photo
 
-    __tablename__ = "Post"
+    __tablename__ = 'Post'
 
     id = Column(Integer, primary_key=True)
     title = Column(String(100), nullable=False)
