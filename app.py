@@ -20,11 +20,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 CORS(app,
-     resources={r'/*': {'origins': 'http://localhost:3000'}},
-     upport_credentials=True,
-     #  methods=['POST', 'GET'],
-     support_credentials=True
-     )
+    resources={r'/*': {'origins': 'http://localhost:3000'}},
+    upport_credentials=True,
+    methods=['POST', 'GET'],
+    support_credentials=True
+    )
 
 app.register_blueprint(registration.registration, url_prefix='/api/')
 app.register_blueprint(authorization.author, url_prefix='/api/')

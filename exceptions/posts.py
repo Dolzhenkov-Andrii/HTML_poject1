@@ -13,4 +13,3 @@ class PostArgsError(BasePostError):
     """Request arguments error
     """
     message =  'Request arguments error'
-

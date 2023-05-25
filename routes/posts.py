@@ -1,17 +1,19 @@
 '''
     Posts routes
         /posts (args: position, amount)
-        /posts/amount
         /post (args: id)
 '''
 
 from flask_api import status
 from flask import request
 from flask import Blueprint
-from databases.models.post import Post
+from databases.models.post import Post, PostStatus
 from decorators.token import token_required
-from exceptions.posts import PostArgsError
-from config.config import BASE_COUNT_POSTS, BASE_POSITION_POSTS
+from exceptions.posts import PostArgsError, APIexception
+from config.db import db
+from config.config import BASE_COUNT_POSTS, BASE_POSITION_POSTS, SECRET_KEY, ACTIVE_POST_STATUS
+from validations.routes.new_post import PostValid
+from tokens.token_hendler import TokenManager
 
 
 posts = Blueprint('posts', __name__, template_folder='templates')
@@ -32,30 +34,10 @@ def get_posts():
 
     slice_posts = Post.query.order_by(
         Post.id.desc()).offset(position).limit(amount).all()
-    return {'posts': slice_posts}, status.HTTP_200_OK
-
-
-@posts.route('/posts_amount', endpoint='get_amount_posts', methods=['GET'])
-@token_required
-def get_amount_posts():
-    '''Size all posts'''
     amount = Post.query.count()
-    return {'size': amount, }, status.HTTP_200_OK
 
+    return {'posts': slice_posts, 'size': amount}, status.HTTP_200_OK
 
-@posts.route('/post', endpoint='get_post', methods=['GET'])
-@token_required
-def get_post():
-    '''Post
-        returns post by id
-    '''
-    post_id = request.args.get('id', default=None, type=int)
-
-    if post_id is None or post_id < 0:
-        return PostArgsError.message, status.HTTP_400_BAD_REQUEST
-
-    post = Post.query.filter_by(id=post_id).first()
-    return {'post': post, }, status.HTTP_200_OK
 
 
 @posts.route('/new-post', endpoint='set_post', methods=['POST'])
@@ -63,10 +45,44 @@ def get_post():
 def set_post():
     '''Post
         add new post
+
+        title: str
+        text: str
+        status: str
+        likes: int
+        view: int
+        shared: int
+        user: User
+        photos: Photo
     '''
-    post_form = request.get_json()
 
-    if post_form is None or post_form is False:
-        return 'error.message', status.HTTP_400_BAD_REQUEST
+    try:
+        post_form = PostValid(**request.get_json())
+        validate_date = post_form.validate()
+        user_id = TokenManager.get_id_user(token=request.headers['Access-Token'],key=SECRET_KEY)
 
-    return f'I get form = {post_form}', status.HTTP_200_OK
+    except APIexception as error:
+        return f'{error.message}', status.HTTP_400_BAD_REQUEST
+
+    if validate_date is None or validate_date is False:
+        return PostArgsError.message, status.HTTP_400_BAD_REQUEST
+
+    post_status = PostStatus.query.filter_by(name=ACTIVE_POST_STATUS).first()
+    if post_status is None:
+        status_post = PostStatus()
+        status_post.name = ACTIVE_POST_STATUS
+        db.session.add(status_post)  # pylint: disable=no-member
+        db.session.commit()  # pylint: disable=no-member
+    try:
+
+        new_post = Post()
+        new_post.title = validate_date['title']
+        new_post.text = validate_date['text']
+        new_post.status_id = PostStatus.query.filter_by(name=ACTIVE_POST_STATUS).first().id
+        new_post.user_id = user_id
+        db.session.add(new_post)  # pylint: disable=no-member
+        db.session.commit()  # pylint: disable=no-member
+    except APIexception as error:
+            return f'{error.message}', status.HTTP_400_BAD_REQUEST
+
+    return f'User_ID = {user_id}', status.HTTP_200_OK

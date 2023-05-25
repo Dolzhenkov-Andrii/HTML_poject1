@@ -82,11 +82,12 @@ def authorization():
             username=f"{validated_data['username']}").first()
         hash_key = pbkdf2_hmac('sha256', validated_data['password'].encode(
             'utf-8'), PASSWORD_SALT.encode('utf-8'), 100000)
-        if user is None or (user.pasword == hash_key.hex()) is False:
-            return InvalidAuthorisation.message, status.HTTP_401_UNAUTHORIZED
 
         if user.status.name == NOT_ACTIVE_USER_STATUS:
             return 'Account not activated', status.HTTP_401_UNAUTHORIZED
+
+        if user is None or (user.pasword == hash_key.hex()) is False:
+            return InvalidAuthorisation.message, status.HTTP_401_UNAUTHORIZED
 
         token_time = REFRESH_TOKEN_TIME
         if validated_data['remember_me']:
@@ -134,6 +135,9 @@ def set_password_recovery():
         if user is None:
             return 'No user with this username', status.HTTP_404_NOT_FOUND
 
+    if user.status.name == NOT_ACTIVE_USER_STATUS:
+            return 'Account not activated', status.HTTP_401_UNAUTHORIZED
+
     hash_key = TokenManager.create(
         SECRET_KEY, REFRESH_REMEMBER_TOKEN_TIME, {'user_id': user.id, })
     activ_key = ActivationKey()
@@ -155,7 +159,6 @@ def get_activation():
     '''
         Changes the user's password
     '''
-
     try:
         user_form = Authorization(**request.get_json())
         validated_data = user_form.validate()

@@ -1,4 +1,4 @@
-''' Name chek
+''' User date chek
 '''
 from dateutil import parser
 from email_validator import validate_email
