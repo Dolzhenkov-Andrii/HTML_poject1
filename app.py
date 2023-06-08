@@ -18,6 +18,7 @@ from config.config import APP_PORT, APP_HOST
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db.init_app(app)
 CORS(app,
     resources={r'/*': {'origins': 'http://localhost:3000'}},

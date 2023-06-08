@@ -50,3 +50,13 @@ class InvalidDate(ParserError):
     """invalid date
     """
     message = 'Invalid date format'
+
+class InvalidImage(APIexception):
+    """ invalid image
+    """
+    message = 'Invalid Image'
+
+class InvalidImageFormat(InvalidImage):
+    """ invalid image
+    """
+    message = 'Invalid Image Format'

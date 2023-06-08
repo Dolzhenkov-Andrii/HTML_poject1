@@ -7,7 +7,6 @@ from sqlalchemy import Integer, Column, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from databases.models.userStatus import UserStatus
 from databases.models.socialMedia import SocialMedia
-
 from config.db import db
 
 
@@ -26,7 +25,7 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     birthday: date
     phone: str
     status: str
-    # pasword: str
+    photo: str
 
     id = Column(Integer, primary_key=True)
     username = Column(String(255), unique=True, nullable=False)
@@ -38,9 +37,11 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     phone = Column(String(255), nullable=False)
     status_id = Column(Integer, ForeignKey(UserStatus.id), nullable=False)
     status = relationship(UserStatus)
+    photo = Column(String(255))
     social_media_id = Column(Integer, ForeignKey(
         SocialMedia.id))
     soCmedia = relationship(SocialMedia)
+
 
     def __repr__(self):
         return f'User {self.id}'
