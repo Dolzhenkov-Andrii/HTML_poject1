@@ -2,7 +2,7 @@
     User module
 '''
 from dataclasses import dataclass
-from datetime import date
+from datetime import datetime
 from sqlalchemy import Integer, Column, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from databases.models.userStatus import UserStatus
@@ -22,7 +22,7 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     email: str
     surname: str
     name: str
-    birthday: date
+    birthday: datetime
     phone: str
     status: str
     photo: str
@@ -31,11 +31,11 @@ class User(db.Model):  # pylint: disable=too-few-public-methods
     username = Column(String(255), unique=True, nullable=False)
     pasword = Column(String(255), nullable=False)
     email = Column(String(255), unique=True, nullable=False)
-    surname = Column(String(255), nullable=False)
-    name = Column(String(255), nullable=False)
-    birthday = Column(Date, nullable=False)
-    phone = Column(String(255), nullable=False)
-    status_id = Column(Integer, ForeignKey(UserStatus.id), nullable=False)
+    surname = Column(String(255))
+    name = Column(String(255))
+    birthday = Column(Date)
+    phone = Column(String(255))
+    status_id = Column(Integer, ForeignKey(UserStatus.id))
     status = relationship(UserStatus)
     photo = Column(String(255))
     social_media_id = Column(Integer, ForeignKey(

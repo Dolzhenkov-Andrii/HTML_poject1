@@ -54,11 +54,10 @@ def update_user():
             db.session.add(avatar)  # pylint: disable=no-member
             db.session.commit()  # pylint: disable=no-member
             user.photo = avatar_name
-
-        user.surname = validated_data['surname']
-        user.name = validated_data['name']
-        user.phone = validated_data['phone']
-        user.birthday = validated_data['birthday']
+        user.surname = validated_data.get('surname')
+        user.name = validated_data.get('name')
+        user.phone = validated_data.get('phone')
+        user.birthday = validated_data.get('birthday')
         db.session.commit() # pylint: disable=no-member
         return {'user': user}, status.HTTP_200_OK
     return 'Error: "User is not found..."', status.HTTP_400_BAD_REQUEST

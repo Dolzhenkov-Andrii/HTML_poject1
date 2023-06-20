@@ -11,6 +11,7 @@ class PostStatus(db.Model):  # pylint: disable=too-few-public-methods
     '''
         postStatus model class
     '''
+    id: int #pylint: disable=C0103
     name: str
 
     __tablename__ = 'Post_Status'
@@ -18,4 +19,4 @@ class PostStatus(db.Model):  # pylint: disable=too-few-public-methods
     name = Column(String(255), nullable=False)
 
     def __repr__(self):
-        return f'PostStatus {self.name}'
+        return f'PostStatus: {self.name}'

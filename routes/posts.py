@@ -7,9 +7,13 @@
 from flask_api import status
 from flask import request
 from flask import Blueprint
+from service.upload_image import UploadImage
 from databases.models.post import Post, PostStatus
+from databases.models.photo import Photo
 from decorators.token import token_required
 from exceptions.posts import PostArgsError, APIexception
+from exceptions.token import DecodeToken
+from exceptions.validate import InvalidImage
 from config.db import db
 from config.config import BASE_COUNT_POSTS, BASE_POSITION_POSTS, SECRET_KEY, ACTIVE_POST_STATUS
 from validations.routes.new_post import PostValid
@@ -57,15 +61,22 @@ def set_post():
     '''
 
     try:
-        post_form = PostValid(**request.get_json())
+        post_form = PostValid(**request.form)
         validate_date = post_form.validate()
-        user_id = TokenManager.get_id_user(token=request.headers['Access-Token'],key=SECRET_KEY)
-
     except APIexception as error:
-        return f'{error.message}', status.HTTP_400_BAD_REQUEST
+        return error.message, status.HTTP_400_BAD_REQUEST
 
-    if validate_date is None or validate_date is False:
-        return PostArgsError.message, status.HTTP_400_BAD_REQUEST
+    try:
+        user_id = TokenManager.get_id_user(SECRET_KEY ,request.headers['Access-Token'])
+    except DecodeToken as error:
+        return error.message, status.HTTP_400_BAD_REQUEST
+
+    img_photo = None
+    if request.method == 'POST' and 'file' in request.files:
+        try:
+            img_photo = UploadImage(request.files['file']).save_image()
+        except InvalidImage as error:
+            return error.message, status.HTTP_400_BAD_REQUEST
 
     post_status = PostStatus.query.filter_by(name=ACTIVE_POST_STATUS).first()
     if post_status is None:
@@ -73,8 +84,8 @@ def set_post():
         status_post.name = ACTIVE_POST_STATUS
         db.session.add(status_post)  # pylint: disable=no-member
         db.session.commit()  # pylint: disable=no-member
-    try:
 
+    try:
         new_post = Post()
         new_post.title = validate_date['title']
         new_post.text = validate_date['text']
@@ -82,7 +93,15 @@ def set_post():
         new_post.user_id = user_id
         db.session.add(new_post)  # pylint: disable=no-member
         db.session.commit()  # pylint: disable=no-member
-    except APIexception as error:
-            return f'{error.message}', status.HTTP_400_BAD_REQUEST
+        if img_photo is not None:
+            photo = Photo()
+            photo.photo = img_photo
+            photo.user_id = user_id
+            photo.post_id = new_post.id
+            db.session.add(photo)  # pylint: disable=no-member
+            db.session.commit()  # pylint: disable=no-member
 
-    return f'User_ID = {user_id}', status.HTTP_200_OK
+    except APIexception as error:
+        return error.message, status.HTTP_400_BAD_REQUEST
+
+    return {'post' : new_post}, status.HTTP_200_OK

@@ -19,4 +19,4 @@ class Category(db.Model):  # pylint: disable=too-few-public-methods
     name = Column(String(255), nullable=False)
 
     def __repr__(self):
-        return f'Category {self.name}'
+        return f'Category: {self.name}'

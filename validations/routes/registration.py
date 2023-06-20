@@ -5,11 +5,7 @@ from exceptions.validate import ErrorForms
 from validations.checking_db_fields import (
     valid_username_field,
     valid_pasword_field,
-    valid_email_field,
-    valid_surname_field,
-    valid_name_field,
-    valid_birthday_field,
-    valid_phone_field,
+    valid_email_field
 )
 
 
@@ -20,10 +16,6 @@ class Registration:
         'username': str,
         'password': str,
         'email': str,
-        'surname': str,
-        'name': str,
-        'birthday': str,
-        'phone': str,
     }
 
     def __init__(self, **request_data):
@@ -43,10 +35,6 @@ class Registration:
                 'username': valid_username_field(self.request_data['username']),
                 'password': valid_pasword_field(self.request_data['password']),
                 'email': valid_email_field(self.request_data['email']),
-                'surname': valid_surname_field(self.request_data['surname']),
-                'name': valid_name_field(self.request_data['name']),
-                'birthday': valid_birthday_field(self.request_data['birthday']),
-                'phone': valid_phone_field(self.request_data['phone']),
             }
         except ErrorForms as error:
             raise error

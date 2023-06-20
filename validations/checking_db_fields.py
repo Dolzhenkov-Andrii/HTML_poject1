@@ -9,7 +9,8 @@ from exceptions.validate import (
     InvalidDate,
     ParserError,
     EmailNotValidError,
-    InvalidType
+    InvalidType,
+    InvalidKey
     )
 from config.config import (
     VALID_MAX_SIZE_PASSWORD,
@@ -180,3 +181,18 @@ def valid_birthday_field(birthday):
         raise InvalidDate from error
 
     return valid_birthday
+
+
+def valid_field(data, key):
+    """validate data from key"""
+
+    if key == 'name':
+        return valid_name_field(data)
+    elif key == 'surname':
+        return valid_surname_field(data)
+    elif key == 'birthday':
+        return valid_birthday_field(data)
+    elif key == 'phone':
+        return valid_phone_field(data)
+    else:
+        raise InvalidKey

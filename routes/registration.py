@@ -35,7 +35,7 @@ def set_registration():
         New user
     '''
     try:
-        registr_form = Registration(**request.get_json())
+        registr_form = Registration(**request.form)
         validated_data = registr_form.validate()
     except ErrorForms as error:
         return error.message, status.HTTP_400_BAD_REQUEST
@@ -68,10 +68,6 @@ def set_registration():
     new_user.pasword = pasword.hex()
     new_user.username = validated_data['username']
     new_user.email = validated_data['email']
-    new_user.surname = validated_data['surname']
-    new_user.name = validated_data['name']
-    new_user.birthday = validated_data['birthday']
-    new_user.phone = validated_data['phone']
     new_user.status_id = UserStatus.query.filter_by(
         name=NOT_ACTIVE_USER_STATUS).first().id
     db.session.add(new_user)  # pylint: disable=no-member
